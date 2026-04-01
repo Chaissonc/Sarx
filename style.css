@@ -1,0 +1,54 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+.statFourm {
+  display: inline-block;
+}
+
+.container {
+  background-color: rgb(242, 241, 238);
+  border-radius: 16px;
+  padding: 20px 24px;
+  width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+input{
+border-radius: 18px;
+border: none;
+height:30px;
+background-color: #fefefe;
+}
+.fourmTitle {
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.field input {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.fourmButton{
+  border:none;
+  border-radius: 8px;
+  height:30px;
+  background-color: hsl(0, 0%, 100%);
+}
