@@ -6,52 +6,45 @@ body {
   margin: 0;
   font-family: sans-serif;
 }
-.statFourm {
-  display: inline-block;
+html{
+  background-color: white;
 }
+
+
+
+
+
 
 .container {
   background-color: rgb(242, 241, 238);
   border-radius: 16px;
   padding: 20px 24px;
-  width: 340px;
+  width: 95%;
   display: flex;
   flex-direction: column;
   gap: 14px;
+  justify-content: center;
+  justify-self: center;
 }
 
-.field {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-}
-input{
-border-radius: 18px;
-border: none;
-height:30px;
-background-color: #fefefe;
-}
-.fourmTitle {
+.atributeTitle {
   font-weight: bold;
   font-size: 0.85rem;
   color: #333;
 }
-
-.field input {
-  width: 100%;
-  padding: 6px 10px;
-  border: 1px solid #bbb;
-  border-radius: 8px;
-  font-size: 1rem;
+input{
+border-radius: 9px;
+border: none;
+height:30px;
+background-color: #fefefe;
+padding-left:7px;
+outline: none;
 }
 
-.fourmButton{
-  border:none;
-  border-radius: 8px;
-  height:30px;
-  background-color: hsl(0, 0%, 100%);
+input:focus{
+ outline: 1.5px solid #4a90e2;
 }
+
 
 .heightInputs {
   display: flex;
@@ -60,15 +53,6 @@ background-color: #fefefe;
 
 .heightInputs input {
   flex: 1;
-}
-
-.activitySelect {
-  border-radius: 8px;
-  border: none;
-  height: 34px;
-  padding: 0 8px;
-  background-color: #fefefe;
-  font-size: 0.9rem;
 }
 
 .sexButtons {
@@ -87,9 +71,131 @@ background-color: #fefefe;
   color: #555;
   transition: all 0.15s;
 }
-
+.sexButton:hover{
+  border-color: #e6e6e6;
+  background-color: #ffffff;
+  color: #000000;
+}
 .sexButton.active {
   border-color: #4a90e2;
   background-color: #4a90e2;
   color: #fff;
+}
+.activitySelect {
+  border-radius: 8px;
+  border: none;
+  height: 34px;
+  padding: 0 8px;
+  background-color: #fefefe;
+  font-size: 0.9rem;
+  cursor: pointer;
+  outline: none;
+}
+.activitySelect:focus{
+  outline: 1.5px solid #4a90e2;
+}
+.fourmButton{
+  border:none;
+  border-radius: 8px;
+  height:30px;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.fourmButton:hover{
+  background-color: #4a90e2;
+  color:rgb(255, 255, 255);
+}
+@media screen and (max-width: 480px) {
+ .container {
+  background-color: rgb(242, 241, 238);
+  border-radius: 16px;
+  padding: 20px 24px;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  justify-content: center;
+  justify-self: center;
+}
+
+.atributeTitle {
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: #333;
+}
+input{
+border-radius: 9px;
+border: none;
+height:30px;
+background-color: #fefefe;
+padding-left:7px;
+outline: none;
+}
+
+input:focus{
+ outline: 1.5px solid #4a90e2;
+}
+
+
+.heightInputs {
+  display: flex;
+  gap: 8px;
+}
+
+.heightInputs input {
+  flex: 1;
+}
+
+.sexButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.sexButton {
+  flex: 1;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  height: 34px;
+  background-color: #fefefe;
+  cursor: pointer;
+  font-weight: bold;
+  color: #555;
+  transition: all 0.15s;
+}
+.sexButton:hover{
+  border-color: #e6e6e6;
+  background-color: #ffffff;
+  color: #000000;
+}
+.sexButton.active {
+  border-color: #4a90e2;
+  background-color: #4a90e2;
+  color: #fff;
+}
+.activitySelect {
+  border-radius: 8px;
+  border: none;
+  height: 34px;
+  padding: 0 8px;
+  background-color: #fefefe;
+  font-size: 0.9rem;
+  cursor: pointer;
+  outline: none;
+}
+.activitySelect:focus{
+  outline: 1.5px solid #4a90e2;
+}
+.fourmButton{
+  border:none;
+  border-radius: 8px;
+  height:30px;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.fourmButton:hover{
+  background-color: #4a90e2;
+  color:rgb(255, 255, 255);
+}
 }

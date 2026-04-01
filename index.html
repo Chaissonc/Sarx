@@ -8,32 +8,33 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>calc</h1>
+    <h1>body metrics</h1>
 
     <div class="statFourm">
         <div class="container">
-            <a class="fourmTitle">Body Weight</a><input class=bodyWeight type="number" placeholder="lbs">
-            <a class="fourmTitle">Height</a>
+            <a class="atributeTitle">Age</a><input value="21" class=age type="number" placeholder="">
+             <a class="atributeTitle">Height</a>
             <div class="heightInputs">
-                <input class="heightFt" type="number" placeholder="ft" min="0">
-                <input class="heightIn" type="number" placeholder="in" min="0" max="11">
+                <input value=6 class="heightFt" type="number" placeholder="ft" min="0">
+                <input value=6 class="heightIn" type="number" placeholder="in" min="0" max="11">
             </div>
-            <a class="fourmTitle">Age</a><input class=age type="number" placeholder="">
-            <a class="fourmTitle">Sex</a>
+            <a class="atributeTitle">Body Weight</a>
+                <input value=210 class=bodyWeight type="number" placeholder="lbs">
+           
+            <a class="atributeTitle">Sex</a>
             <div class="sexButtons">
                 <button class="sexButton" onclick="selectSex(this, 'male')">Male</button>
                 <button class="sexButton" onclick="selectSex(this, 'female')">Female</button>
             </div>
-            <a class="fourmTitle">Activity Level</a>
+            <a class="atributeTitle">Activity Level</a>
             <select class="activitySelect">
                 <option value="">Select</option>
                 <option value="1.2">Sedentary (little/no exercise)</option>
                 <option value="1.375">Lightly Active (1–3 days/week)</option>
                 <option value="1.55">Moderately Active (3–5 days/week)</option>
                 <option value="1.725">Very Active (6–7 days/week)</option>
-                <option value="1.9">Extra Active (hard exercise & physical job)</option>
             </select>
-            <button class="fourmButton" onclick="calculate()">Submit</button>
+            <button class="fourmButton" href=results.html link=results.html onclick="calculate()">Submit</button>
         </div>
         <p id="result"></p>
     </div>
