@@ -6,25 +6,42 @@ body {
   margin: 0;
   font-family: sans-serif;
 }
-html{
+
+html {
   background-color: white;
 }
 
+h1 {
+  text-align: center;
+  margin: 24px 0 16px;
+}
 
+/* Panel show/hide */
+.panel {
+  display: none;
+}
+.panel.active {
+  display: block;
+  animation: fadeUp 0.3s ease;
+}
 
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-
-
+/* ── Form ── */
 .container {
   background-color: rgb(242, 241, 238);
   border-radius: 16px;
   padding: 20px 24px;
   width: 95%;
+  max-width: 420px;
   display: flex;
   flex-direction: column;
   gap: 14px;
   justify-content: center;
-  justify-self: center;
+  margin: 0 auto;
 }
 
 .atributeTitle {
@@ -32,19 +49,19 @@ html{
   font-size: 0.85rem;
   color: #333;
 }
-input{
-border-radius: 9px;
-border: none;
-height:30px;
-background-color: #fefefe;
-padding-left:7px;
-outline: none;
+
+input {
+  border-radius: 9px;
+  border: none;
+  height: 30px;
+  background-color: #fefefe;
+  padding-left: 7px;
+  outline: none;
 }
 
-input:focus{
- outline: 1.5px solid #4a90e2;
+input:focus {
+  outline: 1.5px solid #4a90e2;
 }
-
 
 .heightInputs {
   display: flex;
@@ -71,16 +88,19 @@ input:focus{
   color: #555;
   transition: all 0.15s;
 }
-.sexButton:hover{
+
+.sexButton:hover {
   border-color: #e6e6e6;
   background-color: #ffffff;
   color: #000000;
 }
+
 .sexButton.active {
   border-color: #4a90e2;
   background-color: #4a90e2;
   color: #fff;
 }
+
 .activitySelect {
   border-radius: 8px;
   border: none;
@@ -91,111 +111,189 @@ input:focus{
   cursor: pointer;
   outline: none;
 }
-.activitySelect:focus{
+
+.activitySelect:focus {
   outline: 1.5px solid #4a90e2;
 }
-.fourmButton{
-  border:none;
+
+.fourmButton {
+  border: none;
   border-radius: 8px;
-  height:30px;
+  height: 30px;
   background-color: #ffffff;
   cursor: pointer;
   transition: all 0.15s;
 }
-.fourmButton:hover{
+
+.fourmButton:hover {
   background-color: #4a90e2;
-  color:rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
 }
-@media screen and (max-width: 480px) {
- .container {
+
+.form-error {
+  color: #e05;
+  font-size: 0.8rem;
+  margin: 0;
+  min-height: 1em;
+}
+
+/* ── Results ── */
+#results {
+  padding: 0 16px 24px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.diagram-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 16px 0;
+}
+
+.stats-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.stat-card {
+  border-radius: 12px;
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100px;
+  min-height: 80px;
+  justify-content: center;
+  transition: background-color 0.3s, border-color 0.3s;
+  border: 2px solid transparent;
+}
+
+.health-green {
+  background-color: #d4f0d4;
+  border-color: #4caf50;
+}
+
+.health-yellow {
+  background-color: #fff8d4;
+  border-color: #f0c040;
+}
+
+.health-red {
+  background-color: #fdd;
+  border-color: #e05555;
+}
+
+.health-grey {
   background-color: rgb(242, 241, 238);
-  border-radius: 16px;
-  padding: 20px 24px;
-  width: 95%;
+  border-color: #ccc;
+}
+
+.stat-range {
+  font-size: 0.65rem;
+  color: #888;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 0.65rem;
+  font-weight: bold;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-value {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+  margin-top: 2px;
+}
+
+.body-center {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.body-center img {
+  height: 380px;
+  object-fit: contain;
+}
+
+/* Input summary */
+.input-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  justify-content: center;
+  padding: 14px 18px;
+  background-color: rgb(242, 241, 238);
+  border-radius: 12px;
+  margin: 0 0 12px;
+}
+
+.input-summary span {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.back-button {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.glossary {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  justify-content: center;
-  justify-self: center;
+  gap: 12px;
+  padding-bottom: 24px;
 }
 
-.atributeTitle {
+.glossary-item {
+  background-color: rgb(242, 241, 238);
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+
+.glossary-term {
+  display: block;
+  font-size: 0.75rem;
   font-weight: bold;
-  font-size: 0.85rem;
-  color: #333;
-}
-input{
-border-radius: 9px;
-border: none;
-height:30px;
-background-color: #fefefe;
-padding-left:7px;
-outline: none;
-}
-
-input:focus{
- outline: 1.5px solid #4a90e2;
-}
-
-
-.heightInputs {
-  display: flex;
-  gap: 8px;
-}
-
-.heightInputs input {
-  flex: 1;
-}
-
-.sexButtons {
-  display: flex;
-  gap: 8px;
-}
-
-.sexButton {
-  flex: 1;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  height: 34px;
-  background-color: #fefefe;
-  cursor: pointer;
-  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: #555;
-  transition: all 0.15s;
+  margin-bottom: 4px;
 }
-.sexButton:hover{
-  border-color: #e6e6e6;
-  background-color: #ffffff;
-  color: #000000;
+
+.glossary-def {
+  font-size: 0.82rem;
+  color: #666;
+  line-height: 1.5;
 }
-.sexButton.active {
-  border-color: #4a90e2;
-  background-color: #4a90e2;
-  color: #fff;
-}
-.activitySelect {
-  border-radius: 8px;
-  border: none;
-  height: 34px;
-  padding: 0 8px;
-  background-color: #fefefe;
-  font-size: 0.9rem;
-  cursor: pointer;
-  outline: none;
-}
-.activitySelect:focus{
-  outline: 1.5px solid #4a90e2;
-}
-.fourmButton{
-  border:none;
-  border-radius: 8px;
-  height:30px;
-  background-color: #ffffff;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.fourmButton:hover{
-  background-color: #4a90e2;
-  color:rgb(255, 255, 255);
-}
+
+/* ── Mobile ── */
+@media screen and (max-width: 480px) {
+  .body-center img {
+    height: 220px;
+  }
+
+  .stat-card {
+    min-width: 72px;
+    padding: 12px 8px;
+    min-height: 64px;
+  }
+
+  .stat-value {
+    font-size: 0.95rem;
+  }
+
+  .stat-label {
+    font-size: 0.6rem;
+  }
 }

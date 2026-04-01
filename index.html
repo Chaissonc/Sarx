@@ -10,7 +10,7 @@
   <body>
     <h1>body metrics</h1>
 
-    <div class="statFourm">
+    <div id="formPanel" class="statFourm panel active">
         <div class="container">
             <a class="atributeTitle">Age</a><input value="21" class=age type="number" placeholder="">
              <a class="atributeTitle">Height</a>
@@ -20,7 +20,7 @@
             </div>
             <a class="atributeTitle">Body Weight</a>
                 <input value=210 class=bodyWeight type="number" placeholder="lbs">
-           
+
             <a class="atributeTitle">Sex</a>
             <div class="sexButtons">
                 <button class="sexButton" onclick="selectSex(this, 'male')">Male</button>
@@ -34,10 +34,81 @@
                 <option value="1.55">Moderately Active (3–5 days/week)</option>
                 <option value="1.725">Very Active (6–7 days/week)</option>
             </select>
-            <button class="fourmButton" href=results.html link=results.html onclick="calculate()">Submit</button>
+            <p id="formError" class="form-error"></p>
+            <button class="fourmButton" onclick="calculate()">Submit</button>
         </div>
-        <p id="result"></p>
     </div>
+
+    <div id="results" class="panel">
+      <div class="diagram-wrapper">
+        <div class="stats-col stats-left">
+          <div class="stat-card" id="card-bmi">
+            <span class="stat-label">BMI</span>
+            <span class="stat-value" id="val-bmi">--</span>
+            <span class="stat-range">Ideal: 18.5 – 24.9</span>
+          </div>
+          <div class="stat-card" id="card-bodyfat">
+            <span class="stat-label">Body Fat</span>
+            <span class="stat-value" id="val-bodyfat">--</span>
+            <span class="stat-range" id="range-bodyfat"></span>
+          </div>
+          <div class="stat-card" id="card-bmr">
+            <span class="stat-label">BMR</span>
+            <span class="stat-value" id="val-bmr">--</span>
+          </div>
+        </div>
+
+        <div class="body-center">
+          <img id="bodyImage" src="" alt="body diagram">
+        </div>
+
+        <div class="stats-col stats-right">
+          <div class="stat-card" id="card-weight">
+            <span class="stat-label">Weight</span>
+            <span class="stat-value" id="val-weight">--</span>
+            <span class="stat-range" id="range-weight"></span>
+          </div>
+          <div class="stat-card" id="card-tdee">
+            <span class="stat-label">TDEE</span>
+            <span class="stat-value" id="val-tdee">--</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-summary">
+        <span id="sum-age"></span>
+        <span id="sum-height"></span>
+        <span id="sum-weight"></span>
+        <span id="sum-sex"></span>
+        <span id="sum-activity"></span>
+      </div>
+
+      <button class="fourmButton back-button" onclick="showForm()">← Back</button>
+
+      <div class="glossary">
+        <div class="glossary-item">
+          <span class="glossary-term">BMI</span>
+          <span class="glossary-def">Body Mass Index: a ratio of your weight to height. It gives a rough indicator of whether you're in a healthy weight range, though it doesn't account for muscle mass.</span>
+        </div>
+        <div class="glossary-item">
+          <span class="glossary-term">Body Fat</span>
+          <span class="glossary-def">The percentage of your body that is fat. Estimated here using your BMI and age. Lower is generally healthier, but some fat is essential for normal body function.</span>
+        </div>
+        <div class="glossary-item">
+          <span class="glossary-term">BMR</span>
+          <span class="glossary-def">Basal Metabolic Rate: the number of calories your body burns at complete rest just to keep you alive (breathing, circulation, etc.).</span>
+        </div>
+        <div class="glossary-item">
+          <span class="glossary-term">TDEE</span>
+          <span class="glossary-def">Total Daily Energy Expenditure: your BMR multiplied by your activity level. This is roughly how many calories you burn in a day. Eat below this to lose weight, above it to gain.</span>
+        </div>
+        <div class="glossary-item">
+          <span class="glossary-term">Ideal Weight</span>
+          <span class="glossary-def">A healthy weight range for your height based on the Devine formula. Use it as a general target, not a strict rule — body composition matters more than the number on the scale.</span>
+        </div>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
