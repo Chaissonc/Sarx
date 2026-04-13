@@ -198,7 +198,38 @@ function updateTargetCalFromGoal() {
 }
 
 function updateTimeToGoal(targetCals) {
-  // implemented in Task 6
+  var goalWeight  = parseFloat(document.getElementById("goalWeightInput").value);
+  var warningEl   = document.getElementById("goalWarning");
+  var timeEl      = document.getElementById("timeToGoal");
+
+  warningEl.textContent = "";
+  timeEl.textContent    = "";
+
+  if (!goalWeight || !currentWeightLbs) return;
+
+  // Direction mismatch warnings
+  if (selectedGoal === "cut" && goalWeight >= currentWeightLbs) {
+    warningEl.textContent =
+      "Your goal weight is at or above your current weight — consider switching to Bulk.";
+    return;
+  }
+  if (selectedGoal === "bulk" && goalWeight <= currentWeightLbs) {
+    warningEl.textContent =
+      "Your goal weight is at or below your current weight — consider switching to Cut.";
+    return;
+  }
+
+  var dailyDelta = Math.abs(targetCals - tdee);
+  if (dailyDelta === 0) return; // Maintain with no calorie offset — no estimate possible
+
+  var weightDelta  = Math.abs(currentWeightLbs - goalWeight);
+  var calsNeeded   = weightDelta * 3500;
+  var daysToGoal   = calsNeeded / dailyDelta;
+  var weeks        = daysToGoal / 7;
+  var months       = daysToGoal / 30.44;
+
+  timeEl.textContent =
+    "~" + Math.round(weeks) + " weeks / ~" + months.toFixed(1) + " months to goal";
 }
 
 function updateGoalPlanner() {
@@ -269,5 +300,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("targetCalInput").addEventListener("input", function () {
     updateGoalPlanner();
+  });
+
+  document.getElementById("goalWeightInput").addEventListener("input", function () {
+    var targetCals = parseFloat(document.getElementById("targetCalInput").value) || 0;
+    updateTimeToGoal(targetCals);
   });
 });
