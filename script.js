@@ -197,8 +197,49 @@ function updateTargetCalFromGoal() {
   document.getElementById("targetCalInput").value = Math.round(tdee + offset);
 }
 
+function updateTimeToGoal(targetCals) {
+  // implemented in Task 6
+}
+
 function updateGoalPlanner() {
-  // implemented in Task 5
+  if (!selectedGoal) return;
+
+  var targetCals = parseFloat(document.getElementById("targetCalInput").value) || 0;
+
+  // Deficit / surplus label
+  var delta = targetCals - tdee;
+  var deltaLabel = document.getElementById("calDeltaLabel");
+  if (delta < 0) {
+    deltaLabel.textContent = Math.abs(Math.round(delta)) + " cal/day deficit";
+    deltaLabel.className = "cal-delta cal-deficit";
+  } else if (delta > 0) {
+    deltaLabel.textContent = "+" + Math.round(delta) + " cal/day surplus";
+    deltaLabel.className = "cal-delta cal-surplus";
+  } else {
+    deltaLabel.textContent = "At maintenance";
+    deltaLabel.className = "cal-delta";
+  }
+
+  // Macro splits by goal
+  var splits = {
+    cut:      { protein: 0.40, fat: 0.35, carbs: 0.25 },
+    maintain: { protein: 0.30, fat: 0.30, carbs: 0.40 },
+    bulk:     { protein: 0.30, fat: 0.25, carbs: 0.45 }
+  };
+  var split = splits[selectedGoal];
+  var proteinCals = targetCals * split.protein;
+  var fatCals     = targetCals * split.fat;
+  var carbsCals   = targetCals * split.carbs;
+
+  document.getElementById("macro-protein").textContent      = Math.round(proteinCals / 4) + "g";
+  document.getElementById("macro-protein-cals").textContent = Math.round(proteinCals) + " cal";
+  document.getElementById("macro-carbs").textContent        = Math.round(carbsCals / 4) + "g";
+  document.getElementById("macro-carbs-cals").textContent   = Math.round(carbsCals) + " cal";
+  document.getElementById("macro-fat").textContent          = Math.round(fatCals / 9) + "g";
+  document.getElementById("macro-fat-cals").textContent     = Math.round(fatCals) + " cal";
+  document.getElementById("macroSection").style.display     = "block";
+
+  updateTimeToGoal(targetCals);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -220,4 +261,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var btn = document.querySelector('.sexButton[data-sex="' + sex + '"]');
     if (btn) btn.classList.add("active");
   }
+
+  document.getElementById("targetCalInput").addEventListener("input", function () {
+    updateGoalPlanner();
+  });
 });
