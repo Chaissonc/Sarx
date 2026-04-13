@@ -23,6 +23,12 @@ function calculate() {
   }
   document.getElementById("formError").textContent = "";
   currentWeightLbs = inputWeight;
+  localStorage.setItem("bm_age", age);
+  localStorage.setItem("bm_heightFt", inputHeightFt);
+  localStorage.setItem("bm_heightIn", inputHeightIn);
+  localStorage.setItem("bm_weight", inputWeight);
+  localStorage.setItem("bm_sex", selectedSex);
+  localStorage.setItem("bm_activity", activityFactor);
 
   const heightIn = (inputHeightFt * 12) + inputHeightIn;
   const weightKg = inputWeight / 2.2;
@@ -144,3 +150,24 @@ function showOverview() {
   document.getElementById("goalPanel").classList.remove("active");
   document.getElementById("results").classList.add("active");
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Restore form from localStorage
+  var age = localStorage.getItem("bm_age");
+  var heightFt = localStorage.getItem("bm_heightFt");
+  var heightIn = localStorage.getItem("bm_heightIn");
+  var weight = localStorage.getItem("bm_weight");
+  var sex = localStorage.getItem("bm_sex");
+  var activity = localStorage.getItem("bm_activity");
+
+  if (age) document.querySelector(".age").value = age;
+  if (heightFt) document.querySelector(".heightFt").value = heightFt;
+  if (heightIn) document.querySelector(".heightIn").value = heightIn;
+  if (weight) document.querySelector(".bodyWeight").value = weight;
+  if (activity) document.querySelector(".activitySelect").value = activity;
+  if (sex) {
+    selectedSex = sex;
+    var btn = document.querySelector('.sexButton[data-sex="' + sex + '"]');
+    if (btn) btn.classList.add("active");
+  }
+});
