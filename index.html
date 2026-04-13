@@ -23,8 +23,8 @@
 
             <a class="atributeTitle">Sex</a>
             <div class="sexButtons">
-                <button class="sexButton" onclick="selectSex(this, 'male')">Male</button>
-                <button class="sexButton" onclick="selectSex(this, 'female')">Female</button>
+                <button class="sexButton" data-sex="male" onclick="selectSex(this, 'male')">Male</button>
+                <button class="sexButton" data-sex="female" onclick="selectSex(this, 'female')">Female</button>
             </div>
             <a class="atributeTitle">Activity Level</a>
             <select class="activitySelect">
@@ -84,6 +84,7 @@
       </div>
 
       <button class="fourmButton back-button" onclick="showForm()">← Back</button>
+      <button class="fourmButton goal-button" onclick="showGoalPlanner()">Set a Goal →</button>
 
       <div class="glossary">
         <div class="glossary-item">
@@ -106,6 +107,60 @@
           <span class="glossary-term">Ideal Weight</span>
           <span class="glossary-def">A healthy weight range for your height based on the Devine formula. Use it as a general target, not a strict rule — body composition matters more than the number on the scale.</span>
         </div>
+      </div>
+    </div>
+
+    <div id="goalPanel" class="panel">
+      <div class="container">
+        <p class="tdee-display">Your TDEE: <strong><span id="goal-tdee">--</span> cal/day</strong></p>
+
+        <a class="atributeTitle">Goal</a>
+        <div class="goalButtons">
+          <button class="goalButton" onclick="selectGoal(this, 'cut')">Cut</button>
+          <button class="goalButton" onclick="selectGoal(this, 'maintain')">Maintain</button>
+          <button class="goalButton" onclick="selectGoal(this, 'bulk')">Bulk</button>
+        </div>
+
+        <div id="intensitySection" style="display:none;">
+          <a class="atributeTitle">Intensity</a>
+          <div class="intensityButtons">
+            <button class="intensityButton" data-intensity="slow" onclick="selectIntensity(this, 'slow')">Slow</button>
+            <button class="intensityButton" data-intensity="moderate" onclick="selectIntensity(this, 'moderate')">Moderate</button>
+            <button class="intensityButton" data-intensity="aggressive" onclick="selectIntensity(this, 'aggressive')">Aggressive</button>
+          </div>
+        </div>
+
+        <a class="atributeTitle">Target Calories</a>
+        <input id="targetCalInput" type="number" inputmode="decimal" class="targetCalInput" placeholder="cal/day">
+        <p id="calDeltaLabel" class="cal-delta"></p>
+
+        <a class="atributeTitle">Goal Weight (lbs)</a>
+        <input id="goalWeightInput" type="number" inputmode="decimal" class="goalWeightInput" placeholder="lbs">
+        <p id="goalWarning" class="goal-warning"></p>
+        <p id="timeToGoal" class="time-to-goal"></p>
+
+        <div id="macroSection" class="macro-section" style="display:none;">
+          <a class="atributeTitle">Daily Macros</a>
+          <div class="macro-cards">
+            <div class="macro-card">
+              <span class="macro-label">Protein</span>
+              <span class="macro-value" id="macro-protein">--</span>
+              <span class="macro-cals" id="macro-protein-cals">--</span>
+            </div>
+            <div class="macro-card">
+              <span class="macro-label">Carbs</span>
+              <span class="macro-value" id="macro-carbs">--</span>
+              <span class="macro-cals" id="macro-carbs-cals">--</span>
+            </div>
+            <div class="macro-card">
+              <span class="macro-label">Fat</span>
+              <span class="macro-value" id="macro-fat">--</span>
+              <span class="macro-cals" id="macro-fat-cals">--</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="fourmButton back-button" onclick="showOverview()">← Back</button>
       </div>
     </div>
 
