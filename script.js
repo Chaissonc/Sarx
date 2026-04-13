@@ -151,6 +151,56 @@ function showOverview() {
   document.getElementById("results").classList.add("active");
 }
 
+function selectGoal(btn, goal) {
+  selectedGoal = goal;
+  document.querySelectorAll(".goalButton").forEach(function (b) {
+    b.classList.remove("active");
+  });
+  btn.classList.add("active");
+
+  var intensitySection = document.getElementById("intensitySection");
+  if (goal === "maintain") {
+    intensitySection.style.display = "none";
+  } else {
+    intensitySection.style.display = "block";
+    // Default intensity to moderate when goal changes
+    selectedIntensity = "moderate";
+    document.querySelectorAll(".intensityButton").forEach(function (b) {
+      b.classList.remove("active");
+    });
+    var modBtn = document.querySelector('.intensityButton[data-intensity="moderate"]');
+    if (modBtn) modBtn.classList.add("active");
+  }
+
+  updateTargetCalFromGoal();
+  updateGoalPlanner();
+}
+
+function selectIntensity(btn, intensity) {
+  selectedIntensity = intensity;
+  document.querySelectorAll(".intensityButton").forEach(function (b) {
+    b.classList.remove("active");
+  });
+  btn.classList.add("active");
+  updateTargetCalFromGoal();
+  updateGoalPlanner();
+}
+
+function updateTargetCalFromGoal() {
+  if (!selectedGoal) return;
+  var offsets = {
+    cut:      { slow: -250, moderate: -500, aggressive: -750 },
+    maintain: { slow: 0,    moderate: 0,    aggressive: 0    },
+    bulk:     { slow: 250,  moderate: 500,  aggressive: 750  }
+  };
+  var offset = selectedGoal === "maintain" ? 0 : offsets[selectedGoal][selectedIntensity];
+  document.getElementById("targetCalInput").value = Math.round(tdee + offset);
+}
+
+function updateGoalPlanner() {
+  // implemented in Task 5
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   // Restore form from localStorage
   var age = localStorage.getItem("bm_age");
