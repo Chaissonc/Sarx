@@ -220,7 +220,7 @@ function updateTimeToGoal(targetCals) {
   }
 
   var dailyDelta = Math.abs(targetCals - tdee);
-  if (dailyDelta === 0) return; // Maintain with no calorie offset — no estimate possible
+  if (selectedGoal === "maintain" || dailyDelta < 1) return; // Maintain with no calorie offset — no estimate possible
 
   var weightDelta  = Math.abs(currentWeightLbs - goalWeight);
   var calsNeeded   = weightDelta * 3500;
@@ -239,6 +239,8 @@ function updateGoalPlanner() {
   if (targetCals <= 0) {
     document.getElementById("calDeltaLabel").textContent = "";
     document.getElementById("macroSection").style.display = "none";
+    document.getElementById("goalWarning").textContent = "";
+    document.getElementById("timeToGoal").textContent = "";
     return;
   }
 
