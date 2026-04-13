@@ -205,6 +205,11 @@ function updateGoalPlanner() {
   if (!selectedGoal) return;
 
   var targetCals = parseFloat(document.getElementById("targetCalInput").value) || 0;
+  if (targetCals <= 0) {
+    document.getElementById("calDeltaLabel").textContent = "";
+    document.getElementById("macroSection").style.display = "none";
+    return;
+  }
 
   // Deficit / surplus label
   var delta = targetCals - tdee;
