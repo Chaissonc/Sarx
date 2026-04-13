@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (age) document.querySelector(".age").value = age;
   if (heightFt) document.querySelector(".heightFt").value = heightFt;
-  if (heightIn) document.querySelector(".heightIn").value = heightIn;
+  if (heightIn !== null) document.querySelector(".heightIn").value = heightIn;
   if (weight) document.querySelector(".bodyWeight").value = weight;
   if (activity) document.querySelector(".activitySelect").value = activity;
   if (sex) {
