@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Sarx — Objective</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/icon.jpg">
+  <meta property="og:title" content="Sarx — Know your body.">
+  <meta property="og:description" content="Your curated health index. BMI, TDEE, body fat, and goal planning.">
+  <meta property="og:image" content="../assets/icon.jpg">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="app">
+  <div class="screen active">
+    <img class="logo-img" src="../assets/logo.png" alt="Sarx">
+    <p class="section-tag">STATUS • OPTIMAL</p>
+    <div class="title-row">
+      <h2 class="screen-title">Your Objective</h2>
+      <a class="edit-btn" href="../">Edit</a>
+    </div>
+    <div class="stats-bar" id="stats-bar"></div>
+
+    <div class="form-body">
+      <div class="field-group">
+        <label class="field-label">TARGET WEIGHT</label>
+        <div class="input-row">
+          <input id="goalWeightInput" type="number" inputmode="decimal" class="field-input" placeholder="185">
+          <span class="input-unit">LBS</span>
+        </div>
+        <p id="goalWarning" class="goal-warning"></p>
+      </div>
+
+      <div class="field-group">
+        <div class="seg-row">
+          <button class="seg-btn goal-btn" onclick="selectGoal(this,'cut')">CUT</button>
+          <button class="seg-btn goal-btn" onclick="selectGoal(this,'maintain')">MAINTAIN</button>
+          <button class="seg-btn goal-btn" onclick="selectGoal(this,'lean-bulk')">LEAN BULK</button>
+        </div>
+      </div>
+
+      <div id="intensitySection" class="field-group" style="display:none;">
+        <label class="field-label">AGGRESSION LEVEL</label>
+        <div class="seg-row">
+          <button class="seg-btn intensity-btn" data-intensity="slow" onclick="selectIntensity(this,'slow')">SLOW</button>
+          <button class="seg-btn intensity-btn" data-intensity="moderate" onclick="selectIntensity(this,'moderate')">MODERATE</button>
+          <button class="seg-btn intensity-btn" data-intensity="aggressive" onclick="selectIntensity(this,'aggressive')">AGGRESSIVE</button>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">DAILY TARGET</label>
+        <div class="obj-cal-card">
+          <div class="obj-cal-row">
+            <div class="obj-cal-edit">
+              <svg class="edit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
+              <input id="targetCalInput" type="number" inputmode="decimal" class="daily-target-input" placeholder="—">
+            </div>
+            <span class="daily-target-unit">KCAL</span>
+          </div>
+          <p id="calDeltaLabel" class="cal-delta"></p>
+          <p id="timeToGoal" class="time-to-goal"></p>
+        </div>
+      </div>
+
+      <div class="macro-row" id="macroSection" style="display:none;">
+        <div class="macro-item">
+          <span class="macro-label">PROTEIN</span>
+          <div class="macro-val"><span id="macro-protein">--</span><span class="macro-unit">g</span></div>
+        </div>
+        <div class="macro-item">
+          <span class="macro-label">CARBS</span>
+          <div class="macro-val"><span id="macro-carbs">--</span><span class="macro-unit">g</span></div>
+        </div>
+        <div class="macro-item">
+          <span class="macro-label">FATS</span>
+          <div class="macro-val"><span id="macro-fat">--</span><span class="macro-unit">g</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="tab-bar">
+    <button class="tab-item" onclick="location.href='../healthindex/'">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
+        <rect x="3" y="13" width="4" height="8" rx="1"/>
+        <rect x="10" y="8" width="4" height="13" rx="1"/>
+        <rect x="17" y="3" width="4" height="18" rx="1"/>
+      </svg>
+      <span>Index</span>
+    </button>
+    <button class="tab-item active" onclick="location.href='./'">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
+        <path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/>
+      </svg>
+      <span>Objective</span>
+    </button>
+    <button class="tab-item" onclick="location.href='../learning/'">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
+        <path d="M12 3 4 7v13l8-4 8 4V7L12 3zm6 17-6-3-6 3V8.5l6-3 6 3V20z"/>
+      </svg>
+      <span>Learn</span>
+    </button>
+  </nav>
+</div>
+<script>
+  var tdee           = parseFloat(localStorage.getItem("bm_tdee")) || 0;
+  var currentWeight  = parseFloat(localStorage.getItem("bm_weight")) || 0;
+  var selectedGoal   = localStorage.getItem("bm_goal") || null;
+  var selectedIntensity = localStorage.getItem("bm_intensity") || "moderate";
+
+  if (!tdee) { window.location.href = "../"; }
+
+  // Stats bar
+  (function () {
+    var activityLabels = {
+      "1.2": "Sedentary", "1.375": "Lightly Active",
+      "1.55": "Moderately Active", "1.725": "Very Active"
+    };
+    var age      = localStorage.getItem("bm_age");
+    var heightFt = localStorage.getItem("bm_heightFt");
+    var heightIn = localStorage.getItem("bm_heightIn");
+    var weight   = localStorage.getItem("bm_weight");
+    var sex      = localStorage.getItem("bm_sex");
+    var activity = localStorage.getItem("bm_activity");
+    var stats = [
+      { label: "AGE",      value: age },
+      { label: "HEIGHT",   value: heightFt + "'" + heightIn + '"' },
+      { label: "WEIGHT",   value: weight + " lbs" },
+      { label: "SEX",      value: sex === "male" ? "Male" : "Female" },
+      { label: "ACTIVITY", value: activityLabels[activity] || activity }
+    ];
+    document.getElementById("stats-bar").innerHTML = stats.map(function (s) {
+      return '<div class="stat-chip"><span class="stat-chip-label">' + s.label +
+             '</span><span class="stat-chip-value">' + s.value + '</span></div>';
+    }).join("");
+  })();
+
+  function selectGoal(btn, goal) {
+    selectedGoal = goal;
+    localStorage.setItem("bm_goal", goal);
+    document.querySelectorAll(".goal-btn").forEach(function (b) { b.classList.remove("active"); });
+    btn.classList.add("active");
+
+    var section = document.getElementById("intensitySection");
+    if (goal === "maintain") {
+      section.style.display = "none";
+    } else {
+      section.style.display = "";
+      selectedIntensity = localStorage.getItem("bm_intensity") || "moderate";
+      document.querySelectorAll(".intensity-btn").forEach(function (b) { b.classList.remove("active"); });
+      var activeBtn = document.querySelector('.intensity-btn[data-intensity="' + selectedIntensity + '"]');
+      if (activeBtn) activeBtn.classList.add("active");
+    }
+
+    updateTargetCalFromGoal();
+    updateGoalPlanner();
+  }
+
+  function selectIntensity(btn, intensity) {
+    selectedIntensity = intensity;
+    localStorage.setItem("bm_intensity", intensity);
+    document.querySelectorAll(".intensity-btn").forEach(function (b) { b.classList.remove("active"); });
+    btn.classList.add("active");
+    updateTargetCalFromGoal();
+    updateGoalPlanner();
+  }
+
+  function updateTargetCalFromGoal() {
+    if (!selectedGoal) return;
+    var offsets = {
+      cut:         { slow: -250, moderate: -500, aggressive: -750 },
+      maintain:    { slow: 0,    moderate: 0,    aggressive: 0    },
+      "lean-bulk": { slow: 150,  moderate: 300,  aggressive: 500  }
+    };
+    var offset = (offsets[selectedGoal] || {})[selectedIntensity] || 0;
+    var val = Math.round(tdee + offset);
+    document.getElementById("targetCalInput").value = val;
+    localStorage.setItem("bm_targetCal", val);
+  }
+
+  function updateTimeToGoal(targetCals) {
+    if (!selectedGoal) return;
+    var goalWeight = parseFloat(document.getElementById("goalWeightInput").value);
+    var warningEl  = document.getElementById("goalWarning");
+    var timeEl     = document.getElementById("timeToGoal");
+
+    warningEl.textContent = "";
+    timeEl.textContent = "";
+
+    if (!goalWeight || !currentWeight) return;
+
+    if (selectedGoal === "cut" && goalWeight >= currentWeight) {
+      warningEl.textContent = "Goal weight is at or above current — consider Lean Bulk.";
+      return;
+    }
+    if (selectedGoal === "lean-bulk" && goalWeight <= currentWeight) {
+      warningEl.textContent = "Goal weight is at or below current — consider Cut.";
+      return;
+    }
+
+    var dailyDelta = Math.abs(targetCals - tdee);
+    if (selectedGoal === "maintain" || dailyDelta < 1) return;
+
+    var weightDelta = Math.abs(currentWeight - goalWeight);
+    var days  = (weightDelta * 3500) / dailyDelta;
+    var weeks = days / 7;
+    var months = days / 30.44;
+
+    timeEl.textContent = "~" + Math.round(weeks) + " weeks / ~" + months.toFixed(1) + " months to goal";
+  }
+
+  function updateGoalPlanner() {
+    if (!selectedGoal) return;
+    var targetCals = parseFloat(document.getElementById("targetCalInput").value) || 0;
+    var deltaEl = document.getElementById("calDeltaLabel");
+
+    if (targetCals <= 0) {
+      deltaEl.textContent = "";
+      document.getElementById("macroSection").style.display = "none";
+      document.getElementById("goalWarning").textContent = "";
+      document.getElementById("timeToGoal").textContent = "";
+      return;
+    }
+
+    var delta = targetCals - tdee;
+    if (delta < 0) {
+      deltaEl.textContent = Math.abs(Math.round(delta)) + " cal/day deficit";
+      deltaEl.className = "cal-delta cal-deficit";
+    } else if (delta > 0) {
+      deltaEl.textContent = "+" + Math.round(delta) + " cal/day surplus";
+      deltaEl.className = "cal-delta cal-surplus";
+    } else {
+      deltaEl.textContent = "At maintenance";
+      deltaEl.className = "cal-delta";
+    }
+
+    var splits = {
+      cut:         { protein: 0.40, fat: 0.35, carbs: 0.25 },
+      maintain:    { protein: 0.30, fat: 0.30, carbs: 0.40 },
+      "lean-bulk": { protein: 0.35, fat: 0.25, carbs: 0.40 }
+    };
+    var split = splits[selectedGoal];
+    document.getElementById("macro-protein").textContent = Math.round(targetCals * split.protein / 4);
+    document.getElementById("macro-carbs").textContent   = Math.round(targetCals * split.carbs / 4);
+    document.getElementById("macro-fat").textContent     = Math.round(targetCals * split.fat / 9);
+    document.getElementById("macroSection").style.display = "flex";
+
+    updateTimeToGoal(targetCals);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Restore goal weight
+    var savedGoalWeight = localStorage.getItem("bm_goalWeight");
+    if (savedGoalWeight) document.getElementById("goalWeightInput").value = savedGoalWeight;
+
+    // Restore goal state
+    if (selectedGoal) {
+      var goalBtn = document.querySelector('.goal-btn[onclick*="' + selectedGoal + '"]');
+      if (goalBtn) goalBtn.classList.add("active");
+
+      var section = document.getElementById("intensitySection");
+      if (selectedGoal !== "maintain") {
+        section.style.display = "";
+        var intBtn = document.querySelector('.intensity-btn[data-intensity="' + selectedIntensity + '"]');
+        if (intBtn) intBtn.classList.add("active");
+      }
+
+      // Restore target cal or compute it
+      var savedCal = localStorage.getItem("bm_targetCal");
+      if (savedCal) {
+        document.getElementById("targetCalInput").value = savedCal;
+      } else {
+        updateTargetCalFromGoal();
+      }
+      updateGoalPlanner();
+    }
+
+    document.getElementById("targetCalInput").addEventListener("input", function () {
+      localStorage.setItem("bm_targetCal", this.value);
+      updateGoalPlanner();
+    });
+
+    document.getElementById("goalWeightInput").addEventListener("input", function () {
+      localStorage.setItem("bm_goalWeight", this.value);
+      var targetCals = parseFloat(document.getElementById("targetCalInput").value) || 0;
+      updateTimeToGoal(targetCals);
+    });
+  });
+</script>
+</body>
+</html>

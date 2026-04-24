@@ -1,169 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Body Metrics</title>
-
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <h1>body metrics</h1>
-
-    <div id="formPanel" class="statFourm panel active">
-        <div class="container">
-            <a class="atributeTitle">Age</a><input class=age type="number" inputmode="decimal" placeholder="">
-             <a class="atributeTitle">Height</a>
-            <div class="heightInputs">
-                <input class="heightFt" type="number" inputmode="decimal" placeholder="ft" min="0">
-                <input class="heightIn" type="number" inputmode="decimal" placeholder="in" min="0" max="11">
-            </div>
-            <a class="atributeTitle">Body Weight</a>
-                <input class=bodyWeight type="number" inputmode="decimal" placeholder="lbs">
-
-            <a class="atributeTitle">Sex</a>
-            <div class="sexButtons">
-                <button class="sexButton" data-sex="male" onclick="selectSex(this, 'male')">Male</button>
-                <button class="sexButton" data-sex="female" onclick="selectSex(this, 'female')">Female</button>
-            </div>
-            <a class="atributeTitle">Activity Level</a>
-            <select class="activitySelect">
-                <option value="">Select</option>
-                <option value="1.2">Sedentary (little/no exercise)</option>
-                <option value="1.375">Lightly Active (1–3 days/week)</option>
-                <option value="1.55">Moderately Active (3–5 days/week)</option>
-                <option value="1.725">Very Active (6–7 days/week)</option>
-            </select>
-            <p id="formError" class="form-error"></p>
-            <button class="fourmButton" onclick="calculate()">Submit</button>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Sarx</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/icon.jpg">
+  <meta property="og:title" content="Sarx — Know your body.">
+  <meta property="og:description" content="Your curated health index. BMI, TDEE, body fat, and goal planning.">
+  <meta property="og:image" content="assets/icon.jpg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <div class="screen active" id="screen-form">
+    <img class="logo-img" src="assets/logo.png" alt="Sarx">
+    <div class="intro-block">
+      <p class="section-tag">INTRO</p>
+      <h1 class="intro-title">Health Index Calculator</h1>
+      <p class="intro-desc">To generate your curated health index, we require your baseline metrics. These values are used only to calculate your statistics, and are never saved.</p>
     </div>
-
-    <div id="results" class="panel">
-      <div class="diagram-wrapper">
-        <div class="stats-col stats-left">
-          <div class="stat-card" id="card-bmi">
-            <span class="stat-label">BMI</span>
-            <span class="stat-value" id="val-bmi">--</span>
-            <span class="stat-range">Ideal: 18.5 – 24.9</span>
-          </div>
-          <div class="stat-card" id="card-bodyfat">
-            <span class="stat-label">Body Fat</span>
-            <span class="stat-value" id="val-bodyfat">--</span>
-            <span class="stat-range" id="range-bodyfat"></span>
-          </div>
-          <div class="stat-card" id="card-bmr">
-            <span class="stat-label">BMR</span>
-            <span class="stat-value" id="val-bmr">--</span>
-          </div>
+    <div class="form-body">
+      <div class="field-group">
+        <label class="field-label">SEX</label>
+        <div class="seg-row">
+          <button class="seg-btn" data-sex="male" onclick="selectSex(this,'male')">Male</button>
+          <button class="seg-btn" data-sex="female" onclick="selectSex(this,'female')">Female</button>
         </div>
-
-        <div class="body-center">
-          <img id="bodyImage" src="" alt="body diagram">
+      </div>
+      <div class="field-group">
+        <label class="field-label">CURRENT AGE</label>
+        <div class="input-row">
+          <input class="field-input age" type="number" inputmode="decimal" placeholder="28">
+          <span class="input-unit">YRS</span>
         </div>
-
-        <div class="stats-col stats-right">
-          <div class="stat-card" id="card-weight">
-            <span class="stat-label">Weight</span>
-            <span class="stat-value" id="val-weight">--</span>
-            <span class="stat-range" id="range-weight"></span>
+      </div>
+      <div class="field-group">
+        <label class="field-label">BODY MASS</label>
+        <div class="input-row">
+          <input class="field-input bodyWeight" type="number" inputmode="decimal" placeholder="185">
+          <span class="input-unit">LBS</span>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">HEIGHT</label>
+        <div class="height-row">
+          <div class="input-row">
+            <input class="field-input heightFt" type="number" inputmode="decimal" placeholder="5" min="0">
+            <span class="input-unit">FT</span>
           </div>
-          <div class="stat-card" id="card-tdee">
-            <span class="stat-label">TDEE</span>
-            <span class="stat-value" id="val-tdee">--</span>
+          <div class="input-row">
+            <input class="field-input heightIn" type="number" inputmode="decimal" placeholder="10" min="0" max="11">
+            <span class="input-unit">IN</span>
           </div>
         </div>
       </div>
-
-      <div class="input-summary">
-        <span id="sum-age"></span>
-        <span id="sum-height"></span>
-        <span id="sum-weight"></span>
-        <span id="sum-sex"></span>
-        <span id="sum-activity"></span>
-      </div>
-
-      <button class="fourmButton back-button" onclick="showForm()">← Back</button>
-      <button class="fourmButton goal-button" onclick="showGoalPlanner()">Set a Goal →</button>
-
-      <div class="glossary">
-        <div class="glossary-item">
-          <span class="glossary-term">BMI</span>
-          <span class="glossary-def">Body Mass Index: a ratio of your weight to height. It gives a rough indicator of whether you're in a healthy weight range, though it doesn't account for muscle mass.</span>
-        </div>
-        <div class="glossary-item">
-          <span class="glossary-term">Body Fat</span>
-          <span class="glossary-def">The percentage of your body that is fat. Estimated here using your BMI and age. Lower is generally healthier, but some fat is essential for normal body function.</span>
-        </div>
-        <div class="glossary-item">
-          <span class="glossary-term">BMR</span>
-          <span class="glossary-def">Basal Metabolic Rate: the number of calories your body burns at complete rest just to keep you alive (breathing, circulation, etc.).</span>
-        </div>
-        <div class="glossary-item">
-          <span class="glossary-term">TDEE</span>
-          <span class="glossary-def">Total Daily Energy Expenditure: your BMR multiplied by your activity level. This is roughly how many calories you burn in a day. Eat below this to lose weight, above it to gain.</span>
-        </div>
-        <div class="glossary-item">
-          <span class="glossary-term">Ideal Weight</span>
-          <span class="glossary-def">A healthy weight range for your height based on the Devine formula. Use it as a general target, not a strict rule — body composition matters more than the number on the scale.</span>
+      <div class="field-group">
+        <label class="field-label">METABOLIC ACTIVITY SCALE</label>
+        <div class="select-row">
+          <select class="field-select activitySelect">
+            <option value="">Select activity level</option>
+            <option value="1.2">Sedentary (little/no exercise)</option>
+            <option value="1.375">Lightly Active (1–3 days/week)</option>
+            <option value="1.55">Moderately Active (3–5 days/week)</option>
+            <option value="1.725">Very Active (6–7 days/week)</option>
+          </select>
         </div>
       </div>
+      <p id="formError" class="form-error"></p>
+      <button class="primary-btn" onclick="calculate()">CALCULATE HEALTH INDEX</button>
     </div>
-
-    <div id="goalPanel" class="panel">
-      <div class="container">
-        <p class="tdee-display">Your TDEE: <strong><span id="goal-tdee">--</span> cal/day</strong></p>
-
-        <a class="atributeTitle">Goal</a>
-        <div class="goalButtons">
-          <button class="goalButton" onclick="selectGoal(this, 'cut')">Cut</button>
-          <button class="goalButton" onclick="selectGoal(this, 'maintain')">Maintain</button>
-          <button class="goalButton" onclick="selectGoal(this, 'bulk')">Bulk</button>
-        </div>
-
-        <div id="intensitySection" style="display:none;">
-          <a class="atributeTitle">Intensity</a>
-          <div class="intensityButtons">
-            <button class="intensityButton" data-intensity="slow" onclick="selectIntensity(this, 'slow')">Slow</button>
-            <button class="intensityButton" data-intensity="moderate" onclick="selectIntensity(this, 'moderate')">Moderate</button>
-            <button class="intensityButton" data-intensity="aggressive" onclick="selectIntensity(this, 'aggressive')">Aggressive</button>
-          </div>
-        </div>
-
-        <a class="atributeTitle">Target Calories</a>
-        <input id="targetCalInput" type="number" inputmode="decimal" class="targetCalInput" placeholder="cal/day">
-        <p id="calDeltaLabel" class="cal-delta"></p>
-
-        <a class="atributeTitle">Goal Weight (lbs)</a>
-        <input id="goalWeightInput" type="number" inputmode="decimal" class="goalWeightInput" placeholder="lbs">
-        <p id="goalWarning" class="goal-warning"></p>
-        <p id="timeToGoal" class="time-to-goal"></p>
-
-        <div id="macroSection" class="macro-section" style="display:none;">
-          <a class="atributeTitle">Daily Macros</a>
-          <div class="macro-cards">
-            <div class="macro-card">
-              <span class="macro-label">Protein</span>
-              <span class="macro-value" id="macro-protein">--</span>
-              <span class="macro-cals" id="macro-protein-cals">--</span>
-            </div>
-            <div class="macro-card">
-              <span class="macro-label">Carbs</span>
-              <span class="macro-value" id="macro-carbs">--</span>
-              <span class="macro-cals" id="macro-carbs-cals">--</span>
-            </div>
-            <div class="macro-card">
-              <span class="macro-label">Fat</span>
-              <span class="macro-value" id="macro-fat">--</span>
-              <span class="macro-cals" id="macro-fat-cals">--</span>
-            </div>
-          </div>
-        </div>
-
-        <button class="fourmButton back-button" onclick="showOverview()">← Back</button>
-      </div>
-    </div>
-
-    <script src="script.js"></script>
-  </body>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
 </html>
