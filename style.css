@@ -87,6 +87,7 @@ body {
   display: block;
   height: 34px;
   width: auto;
+  margin: 0 auto 20px;
 }
 
 a:has(.logo-img) {
@@ -94,6 +95,8 @@ a:has(.logo-img) {
   width: fit-content;
   margin: 0 auto 20px;
 }
+
+a:has(.logo-img) .logo-img { margin: 0; }
 
 
 /* ─────────────────────────────────────────
