@@ -61,15 +61,13 @@ body {
 .anim-d3   { animation-delay: 0.22s; }
 .anim-d4   { animation-delay: 0.30s; }
 
-/* Macro section reveal */
-.anim-show { animation: popUp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-
 /* Form field stagger */
 .form-body > .field-group:nth-child(1) { animation: popUp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.05s both; }
 .form-body > .field-group:nth-child(2) { animation: popUp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.13s both; }
 .form-body > .field-group:nth-child(3) { animation: popUp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.21s both; }
 .form-body > .field-group:nth-child(4) { animation: popUp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.29s both; }
 .form-body > .field-group:nth-child(5) { animation: popUp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.37s both; }
+.form-body > .macro-row              { animation: popUp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.21s both; }
 
 /* Learn list stagger */
 .learn-topic-item:nth-child(1) { animation-delay: 0.05s; }
@@ -179,7 +177,7 @@ a:has(.logo-img) .logo-img { margin: 0; }
 .input-row {
   display: flex;
   align-items: center;
-  background: #F5F5F7;
+  background: #fafafa;
   border-radius: 10px;
   padding: 0 14px;
   height: 52px;
@@ -212,7 +210,7 @@ a:has(.logo-img) .logo-img { margin: 0; }
 .height-row .input-row { flex: 1; }
 
 .select-row {
-  background: #F5F5F7;
+  background: #fafafa;
   border-radius: 10px;
   height: 52px;
   display: flex;
@@ -263,6 +261,7 @@ a:has(.logo-img) .logo-img { margin: 0; }
 .seg-btn.active             { background: #CC2325; border-color: #CC2325; color: #fff; }
 .seg-btn:not(.active):hover { border-color: #CC2325; color: #CC2325; }
 .seg-btn:active             { transform: scale(0.95); }
+.seg-btn:disabled           { opacity: 1; cursor: default; pointer-events: none; }
 
 .primary-btn {
   width: 100%;
@@ -346,7 +345,7 @@ a:has(.logo-img) .logo-img { margin: 0; }
 }
 
 .metric-card {
-  background: #F5F5F7;
+  background: #fafafa;
   border-radius: 14px;
   padding: 16px;
   flex: 1;
@@ -466,7 +465,7 @@ a:has(.logo-img) .logo-img { margin: 0; }
    GOAL PAGE
 ───────────────────────────────────────── */
 .obj-cal-card {
-  background: #F5F5F7;
+  background: #fafafa;
   border-radius: 14px;
   padding: 16px;
 }
@@ -483,7 +482,7 @@ a:has(.logo-img) .logo-img { margin: 0; }
   display: inline-flex;
   align-items: baseline;
   gap: 6px;
-  border: 1.5px dashed #C0C0CA;
+  border: 1.5px dashed #c0c0ca86;
   border-radius: 10px;
   padding: 10px 14px;
   cursor: text;
@@ -569,7 +568,7 @@ a:has(.logo-img) .logo-img { margin: 0; }
 ───────────────────────────────────────── */
 .macro-row {
   display: flex;
-  background: #F5F5F7;
+  background: #fafafa;
   border-radius: 14px;
   padding: 18px 12px;
   margin-top: 8px;
@@ -592,8 +591,9 @@ a:has(.logo-img) .logo-img { margin: 0; }
   color: #aaa;
 }
 
-.macro-val                  { display: flex; align-items: baseline; gap: 2px; }
-.macro-val span:first-child { font-size: 1.45rem; font-weight: 800; color: #1a1a1a; }
+.macro-val                        { display: flex; align-items: baseline; gap: 2px; }
+.macro-val span:first-child       { font-size: 1.45rem; font-weight: 800; color: #1a1a1a; }
+.macro-row.is-empty .macro-val span:first-child { color: #c0c0c8; }
 
 .macro-unit {
   font-size: 0.72rem;

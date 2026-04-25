@@ -35,7 +35,8 @@ function updateGoalStatusLine() {
   var el = document.getElementById("goalStatusLine");
   if (!el) return;
   var gw = parseFloat(document.getElementById("goalWeightInput").value);
-  if (!selectedGoal || !gw) { el.textContent = ""; return; }
+  if (!gw) { el.textContent = "Enter your goal weight to get started"; return; }
+  if (!selectedGoal) { el.textContent = ""; return; }
   el.style.color = "";
   var diff = Math.round(Math.abs(currentWeight - gw));
   if (selectedGoal === "cut") {
@@ -147,9 +148,7 @@ function updateGoalPlanner() {
 
   if (targetCals <= 0) {
     deltaEl.textContent = "";
-    var ms = document.getElementById("macroSection");
-    ms.style.display = "none";
-    ms.classList.remove("anim-show");
+    resetMacros();
     document.getElementById("goalWarning").textContent = "";
     document.getElementById("timeToGoal").textContent = "";
     return;
@@ -179,20 +178,20 @@ function updateGoalPlanner() {
   document.getElementById("macro-protein-pct").textContent = Math.round(split.protein * 100) + "%";
   document.getElementById("macro-carbs-pct").textContent   = Math.round(split.carbs * 100) + "%";
   document.getElementById("macro-fat-pct").textContent     = Math.round(split.fat * 100) + "%";
-
-  var macroEl = document.getElementById("macroSection");
-  var wasHidden = macroEl.style.display === "none" || macroEl.style.display === "";
-  macroEl.style.display = "flex";
-  if (wasHidden) {
-    macroEl.classList.remove("anim-show");
-    requestAnimationFrame(function () { macroEl.classList.add("anim-show"); });
-  }
+  document.getElementById("macroSection").classList.remove("is-empty");
 
   updateTimeToGoal(targetCals);
 }
 
+function resetMacros() {
+  ["macro-protein","macro-carbs","macro-fat","macro-protein-pct","macro-carbs-pct","macro-fat-pct"]
+    .forEach(function(id) { document.getElementById(id).textContent = "--"; });
+  document.getElementById("macroSection").classList.add("is-empty");
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   var savedGoalWeight = localStorage.getItem("bm_goalWeight");
+  document.getElementById("goalStatusLine").textContent = "Enter your goal weight to get started";
   if (savedGoalWeight) document.getElementById("goalWeightInput").value = savedGoalWeight;
 
   if (selectedGoal) {
@@ -207,12 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (intBtn) intBtn.classList.add("active");
     }
 
-    var savedCal = localStorage.getItem("bm_targetCal");
-    if (savedCal) {
-      document.getElementById("targetCalInput").value = savedCal;
-    } else {
-      updateTargetCalFromGoal();
-    }
+    updateTargetCalFromGoal();
     updateGoalPlanner();
     updateGoalStatusLine();
   }
@@ -223,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (cal && cal < 400) {
       document.getElementById("calDeltaLabel").textContent = "";
       document.getElementById("timeToGoal").innerHTML = "";
-      document.getElementById("macroSection").style.display = "none";
+      resetMacros();
       return;
     }
     var calFloor = (tdee - 750) * 0.5;
@@ -232,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
       deltaEl.textContent = "Going this low can be harmful to your health";
       deltaEl.className = "cal-delta cal-error";
       document.getElementById("timeToGoal").innerHTML = "";
-      document.getElementById("macroSection").style.display = "none";
+      resetMacros();
       return;
     }
     updateGoalPlanner();
@@ -243,15 +237,14 @@ document.addEventListener("DOMContentLoaded", function () {
     var gw = parseFloat(this.value);
     var warningEl = document.getElementById("goalWarning");
 
-    if (!gw) {
+    if (!gw || gw < 80) {
       warningEl.textContent = "";
-      document.getElementById("goalStatusLine").textContent = "";
-      return;
-    }
-
-    if (gw < 80) {
-      warningEl.textContent = "";
-      document.getElementById("goalStatusLine").textContent = "";
+      document.getElementById("goalStatusLine").textContent = !gw ? "Enter your goal weight to get started" : "";
+      document.getElementById("targetCalInput").value = "";
+      document.getElementById("calDeltaLabel").textContent = "";
+      document.getElementById("timeToGoal").textContent = "";
+      document.querySelectorAll(".intensity-btn").forEach(function(b) { b.disabled = true; });
+      resetMacros();
       return;
     }
 
@@ -263,7 +256,8 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("targetCalInput").value = "";
       document.getElementById("calDeltaLabel").textContent = "";
       document.getElementById("timeToGoal").textContent = "";
-      document.getElementById("macroSection").style.display = "none";
+      document.querySelectorAll(".intensity-btn").forEach(function(b) { b.disabled = true; });
+      resetMacros();
       return;
     }
 
@@ -275,11 +269,13 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("targetCalInput").value = "";
       document.getElementById("calDeltaLabel").textContent = "";
       document.getElementById("timeToGoal").textContent = "";
-      document.getElementById("macroSection").style.display = "none";
+      document.querySelectorAll(".intensity-btn").forEach(function(b) { b.disabled = true; });
+      resetMacros();
       return;
     }
 
     warningEl.textContent = "";
+    document.querySelectorAll(".intensity-btn").forEach(function(b) { b.disabled = false; });
 
     if (currentWeight) {
       var autoGoal = gw > currentWeight ? "lean-bulk" : gw < currentWeight ? "cut" : "maintain";
@@ -288,8 +284,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
     }
+    if (!document.getElementById("targetCalInput").value) updateTargetCalFromGoal();
     updateGoalStatusLine();
-    var targetCals = parseFloat(document.getElementById("targetCalInput").value) || 0;
-    updateTimeToGoal(targetCals);
+    updateGoalPlanner();
   });
 });
