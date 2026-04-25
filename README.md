@@ -4,7 +4,7 @@
 
 A personal wellness hub — not a fitness app. Enter your stats once and get a full picture of your health: what your numbers mean, where your goals should be, and the knowledge to back it up.
 
-**[Live Demo →](https://chaissonc.github.io/Body-Metric/)**
+**[Live Now→](https://sarx.app)**
 
 ---
 
@@ -58,7 +58,7 @@ No frameworks, no dependencies, no build step.
 ## Project Structure
 
 ```
-Body-Metric/
+Sarx/
 ├── index.html          # Onboarding form — age, weight, height, sex, activity
 ├── healthindex/        # Health Index — BMI, TDEE/BMR, body fat, weight bar
 ├── objective/          # Goal planner — target weight, macros, time-to-goal
@@ -98,7 +98,7 @@ cd Body-Metric
 open index.html
 ```
 
-Or just hit the [live site](https://chaissonc.github.io/Body-Metric/).
+Or just hit the [live site](https://sarx.app).
 
 ---
 
