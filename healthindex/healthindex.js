@@ -17,7 +17,7 @@
 
   var bmr = localStorage.getItem("bm_bmr");
 
-  document.getElementById("status-tag").textContent = "STATUS • " + (status || "—");
+  document.getElementById("status-tag").textContent = "SARX STATUS • " + (status || "—");
   document.getElementById("val-bmi").textContent = bmi;
   document.getElementById("bmi-category").textContent = bmiCat || "--";
   document.getElementById("val-tdee").textContent = parseInt(tdee).toLocaleString();
@@ -45,12 +45,12 @@
   var bfIdealHigh = sex === "male" ? 20 : 28;
   var rangeEl = document.getElementById("bf-ideal-range");
   if (rangeEl) {
-    rangeEl.innerHTML = '<span>Ideal range: ' + bfIdealLow + '%–' + bfIdealHigh + '%</span>';
+    rangeEl.innerHTML = '<span class="ideal-label">IDEAL RANGE</span><span class="ideal-value">' + bfIdealLow + '%–' + bfIdealHigh + '%</span>';
   }
 
   var weightRangeEl = document.getElementById("weight-ideal-range");
   if (weightRangeEl) {
-    weightRangeEl.innerHTML = '<span>Ideal range: ' + Math.round(idealMin) + '–' + Math.round(idealMax) + ' lbs</span>';
+    weightRangeEl.innerHTML = '<span class="ideal-label">IDEAL RANGE</span><span class="ideal-value">' + Math.round(idealMin) + '–' + Math.round(idealMax) + ' lbs</span>';
   }
 
   var maxBf = sex === "male" ? 35 : 45;

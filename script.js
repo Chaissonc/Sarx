@@ -1,3 +1,5 @@
+if (localStorage.getItem("bm_tdee")) { window.location.replace("healthindex/"); }
+
 let selectedSex = null;
 
 function selectSex(btn, sex) {

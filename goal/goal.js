@@ -4,38 +4,35 @@ var recMin        = parseFloat(localStorage.getItem("bm_minWeight")) || 0;
 var recMax        = currentWeight * 3;
 var selectedGoal  = localStorage.getItem("bm_goal") || null;
 var selectedIntensity = localStorage.getItem("bm_intensity") || "moderate";
+var selectedDiet      = localStorage.getItem("bm_diet") || "balanced";
+
+function resizeCalInput() {
+  var input = document.getElementById("targetCalInput");
+  if (!input) return;
+  var len = (input.value || "0").length || 1;
+  input.style.width = (len * 0.85) + "ch";
+}
+
+var dietSplits = {
+  "balanced":     { protein: 0.30, carbs: 0.40, fat: 0.30 },
+  "high-protein": { protein: 0.42, carbs: 0.28, fat: 0.30 },
+  "low-carb":     { protein: 0.35, carbs: 0.25, fat: 0.40 },
+  "high-carb":    { protein: 0.25, carbs: 0.55, fat: 0.20 },
+  "keto":         { protein: 0.30, carbs: 0.05, fat: 0.65 }
+};
 
 if (!tdee) { window.location.href = "../"; }
 
 (function () {
-  var activityLabels = {
-    "1.2": "Sedentary", "1.375": "Lightly Active",
-    "1.55": "Moderately Active", "1.725": "Very Active"
-  };
-  var age      = localStorage.getItem("bm_age");
-  var heightFt = localStorage.getItem("bm_heightFt");
-  var heightIn = localStorage.getItem("bm_heightIn");
-  var weight   = localStorage.getItem("bm_weight");
-  var sex      = localStorage.getItem("bm_sex");
-  var activity = localStorage.getItem("bm_activity");
-  var stats = [
-    { label: "AGE",      value: age },
-    { label: "HEIGHT",   value: heightFt + "'" + heightIn + '"' },
-    { label: "WEIGHT",   value: weight + " lbs" },
-    { label: "SEX",      value: sex === "male" ? "Male" : "Female" },
-    { label: "ACTIVITY", value: activityLabels[activity] || activity }
-  ];
-  document.getElementById("stats-bar").innerHTML = stats.map(function (s, i) {
-    return '<div class="stat-chip" style="animation: chipIn 0.35s ease ' + (i * 0.07) + 's both"><span class="stat-chip-label">' + s.label +
-           '</span><span class="stat-chip-value">' + s.value + '</span></div>';
-  }).join("");
+  var el = document.getElementById("current-weight-val");
+  if (el && currentWeight) el.textContent = currentWeight;
 })();
 
 function updateGoalStatusLine() {
   var el = document.getElementById("goalStatusLine");
   if (!el) return;
   var gw = parseFloat(document.getElementById("goalWeightInput").value);
-  if (!gw) { el.textContent = "Enter your goal weight to get started"; return; }
+  if (!gw) { el.textContent = "Enter your target weight to get started"; return; }
   if (!selectedGoal) { el.textContent = ""; return; }
   el.style.color = "";
   var diff = Math.round(Math.abs(currentWeight - gw));
@@ -89,9 +86,24 @@ function selectGoal(goal) {
     if (activeBtn) activeBtn.classList.add("active");
   }
 
+  var arrow = document.getElementById("wt-arrow");
+  if (arrow) {
+    arrow.classList.remove("arrow-cut", "arrow-bulk");
+    if (goal === "cut") arrow.classList.add("arrow-cut");
+    else if (goal === "lean-bulk") arrow.classList.add("arrow-bulk");
+  }
+
   updateTargetCalFromGoal();
   updateGoalPlanner();
   updateGoalStatusLine();
+}
+
+function selectDiet(btn, diet) {
+  selectedDiet = diet;
+  localStorage.setItem("bm_diet", diet);
+  document.querySelectorAll("#diet-filters .lib-filter").forEach(function (b) { b.classList.remove("active"); });
+  btn.classList.add("active");
+  updateGoalPlanner();
 }
 
 function selectIntensity(btn, intensity) {
@@ -114,6 +126,7 @@ function updateTargetCalFromGoal() {
   var val = Math.round(tdee + offset);
   document.getElementById("targetCalInput").value = val;
   localStorage.setItem("bm_targetCal", val);
+  resizeCalInput();
 }
 
 function updateTimeToGoal(targetCals) {
@@ -138,7 +151,7 @@ function updateTimeToGoal(targetCals) {
   var projected = new Date(Date.now() + days * 24 * 60 * 60 * 1000);
   var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
   var dateStr = monthNames[projected.getMonth()] + " " + projected.getDate() + ", " + projected.getFullYear();
-  timeEl.innerHTML = "~" + Math.round(weeks) + " weeks / ~" + months.toFixed(1) + " months to goal<br><span class='projected-date'>Est. " + dateStr + "</span>";
+  timeEl.innerHTML = "~" + Math.round(weeks) + " weeks / ~" + months.toFixed(1) + " months to target<br><span class='projected-date'>Est. " + dateStr + "</span>";
 }
 
 function updateGoalPlanner() {
@@ -166,12 +179,7 @@ function updateGoalPlanner() {
     deltaEl.className = "cal-delta";
   }
 
-  var splits = {
-    cut:         { protein: 0.40, fat: 0.35, carbs: 0.25 },
-    maintain:    { protein: 0.30, fat: 0.30, carbs: 0.40 },
-    "lean-bulk": { protein: 0.35, fat: 0.25, carbs: 0.40 }
-  };
-  var split = splits[selectedGoal];
+  var split = dietSplits[selectedDiet] || dietSplits["balanced"];
   document.getElementById("macro-protein").textContent     = Math.round(targetCals * split.protein / 4);
   document.getElementById("macro-carbs").textContent       = Math.round(targetCals * split.carbs / 4);
   document.getElementById("macro-fat").textContent         = Math.round(targetCals * split.fat / 9);
@@ -190,8 +198,16 @@ function resetMacros() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  resizeCalInput();
+
+  var savedDietBtn = document.querySelector('#diet-filters .lib-filter[data-diet="' + selectedDiet + '"]');
+  if (savedDietBtn) {
+    document.querySelectorAll("#diet-filters .lib-filter").forEach(function (b) { b.classList.remove("active"); });
+    savedDietBtn.classList.add("active");
+  }
+
   var savedGoalWeight = localStorage.getItem("bm_goalWeight");
-  document.getElementById("goalStatusLine").textContent = "Enter your goal weight to get started";
+  document.getElementById("goalStatusLine").textContent = "Enter your target weight to get started";
   if (savedGoalWeight) document.getElementById("goalWeightInput").value = savedGoalWeight;
 
   if (selectedGoal) {
@@ -213,6 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("targetCalInput").addEventListener("input", function () {
     localStorage.setItem("bm_targetCal", this.value);
+    resizeCalInput();
     var cal = parseFloat(this.value);
     if (cal && cal < 400) {
       document.getElementById("calDeltaLabel").textContent = "";
@@ -240,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!gw || gw < 80) {
       warningEl.textContent = "";
-      statusLine.textContent = !gw ? "Enter your goal weight to get started" : "";
+      statusLine.textContent = !gw ? "Enter your target weight to get started" : "";
       document.getElementById("targetCalInput").value = "";
       document.getElementById("calDeltaLabel").textContent = "";
       document.getElementById("timeToGoal").textContent = "";
