@@ -1,4 +1,6 @@
-if (localStorage.getItem("bm_tdee")) { window.location.replace("healthindex/"); }
+if (localStorage.getItem("bm_tdee") && !new URLSearchParams(window.location.search).has('edit')) {
+  window.location.replace("healthindex/");
+}
 
 let selectedSex = null;
 

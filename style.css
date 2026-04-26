@@ -3,11 +3,14 @@
 ───────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+html { background: #fafafa; }
+
 body {
   font-family: 'DM Sans', sans-serif;
   background: #fafafa;
   min-height: 100vh;
   overscroll-behavior-y: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 
@@ -26,6 +29,12 @@ body {
   display: none;
   padding: 20px 24px 100px;
   animation: fadeUp 0.22s ease;
+}
+
+@media (display-mode: standalone) {
+  .screen {
+    padding-top: max(20px, env(safe-area-inset-top));
+  }
 }
 
 .screen.active { display: block; }
@@ -1026,7 +1035,7 @@ a:has(.logo-img) .logo-img { margin: 0; }
   display: flex;
   padding-bottom: env(safe-area-inset-bottom, 0);
   z-index: 100;
-  animation: slideUpBar 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+  animation: none;
 }
 
 .tab-item {
@@ -1040,7 +1049,7 @@ a:has(.logo-img) .logo-img { margin: 0; }
   background: transparent;
   cursor: pointer;
   color: #c0c0c8;
-  transition: color 0.15s;
+  transition: none;
   font-family: 'DM Sans', sans-serif;
   font-size: 0.62rem;
   font-weight: 600;
