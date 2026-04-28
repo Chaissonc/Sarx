@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Wellness Learning Library — Evidence-Ranked Guides | Sarx</title>
   <link rel="canonical" href="https://sarx.app/learning/">
   <meta name="description" content="Evidence-ranked wellness guides on supplements, gut health, sleep, hydration, training, and nutrition. Ranked by clinical evidence, not marketing.">
@@ -22,8 +22,50 @@
   <meta property="og:url" content="https://sarx.app/learning/">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Learn — Wellness Library | Sarx">
+  <meta name="twitter:description" content="Evidence-ranked wellness guides on supplements, gut health, sleep, hydration, training, and nutrition.">
+  <meta name="twitter:image:alt" content="Sarx — Free Health Index Calculator">
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Sarx", "item": "https://sarx.app" },
+      { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://sarx.app/learning/" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Wellness Learning Library",
+    "url": "https://sarx.app/learning/",
+    "numberOfItems": 19,
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1,  "name": "Daily Protein Target",    "url": "https://sarx.app/learning/item/?id=daily-protein-target" },
+      { "@type": "ListItem", "position": 2,  "name": "Creatine Monohydrate",    "url": "https://sarx.app/learning/item/?id=creatine-monohydrate" },
+      { "@type": "ListItem", "position": 3,  "name": "Magnesium Glycinate",     "url": "https://sarx.app/learning/item/?id=magnesium-glycinate" },
+      { "@type": "ListItem", "position": 4,  "name": "Vitamin D3 + K2",         "url": "https://sarx.app/learning/item/?id=vitamin-d3-k2" },
+      { "@type": "ListItem", "position": 5,  "name": "Fish Oil (EPA/DHA)",       "url": "https://sarx.app/learning/item/?id=fish-oil" },
+      { "@type": "ListItem", "position": 6,  "name": "Whey Protein",            "url": "https://sarx.app/learning/item/?id=whey-protein" },
+      { "@type": "ListItem", "position": 7,  "name": "Zinc Picolinate",         "url": "https://sarx.app/learning/item/?id=zinc-picolinate" },
+      { "@type": "ListItem", "position": 8,  "name": "Ashwagandha KSM-66",      "url": "https://sarx.app/learning/item/?id=ashwagandha" },
+      { "@type": "ListItem", "position": 9,  "name": "Caffeine",                "url": "https://sarx.app/learning/item/?id=caffeine" },
+      { "@type": "ListItem", "position": 10, "name": "Gut Health",              "url": "https://sarx.app/learning/item/?id=gut-health" },
+      { "@type": "ListItem", "position": 11, "name": "Apple Cider Vinegar",     "url": "https://sarx.app/learning/item/?id=apple-cider-vinegar" },
+      { "@type": "ListItem", "position": 12, "name": "Circadian Rhythm",        "url": "https://sarx.app/learning/item/?id=circadian-rhythm" },
+      { "@type": "ListItem", "position": 13, "name": "Daily Water Target",      "url": "https://sarx.app/learning/item/?id=bodyweight-hydration" },
+      { "@type": "ListItem", "position": 14, "name": "Electrolytes",            "url": "https://sarx.app/learning/item/?id=electrolytes" },
+      { "@type": "ListItem", "position": 15, "name": "Tea & Coffee Count",      "url": "https://sarx.app/learning/item/?id=tea-coffee-count" },
+      { "@type": "ListItem", "position": 16, "name": "Progressive Overload",    "url": "https://sarx.app/learning/item/?id=progressive-overload" },
+      { "@type": "ListItem", "position": 17, "name": "Workout Essentials",      "url": "https://sarx.app/learning/item/?id=workout-essentials" },
+      { "@type": "ListItem", "position": 18, "name": "Daily Fiber Target",      "url": "https://sarx.app/learning/item/?id=daily-fiber-target" }
+    ]
+  }
+  </script>
 </head>
 <body>
 <div class="app">
@@ -40,36 +82,34 @@
 
     <div class="lib-filters" id="lib-filters">
       <button class="lib-filter active" data-filter="all">All</button>
-      <button class="lib-filter" data-filter="body">Body</button>
-      <button class="lib-filter" data-filter="nutrition">Nutrition</button>
-      <button class="lib-filter" data-filter="movement">Movement</button>
-      <button class="lib-filter" data-filter="recovery">Recovery</button>
+      <button class="lib-filter" data-filter="supplements">Supplements</button>
+      <button class="lib-filter" data-filter="health">Health</button>
     </div>
 
     <div class="lib-list" id="lib-list"></div>
   </div>
 
   <nav class="tab-bar">
-    <button class="tab-item" onclick="location.href='../healthindex/'">
+    <a class="tab-item" href="../healthindex/">
       <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
         <rect x="3" y="13" width="4" height="8" rx="1"/>
         <rect x="10" y="8" width="4" height="13" rx="1"/>
         <rect x="17" y="3" width="4" height="18" rx="1"/>
       </svg>
       <span>Index</span>
-    </button>
-    <button class="tab-item" onclick="location.href='../goal/'">
+    </a>
+    <a class="tab-item" href="../plan/">
       <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
         <path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/>
       </svg>
       <span>Plan</span>
-    </button>
-    <button class="tab-item active" onclick="location.href='./'">
+    </a>
+    <a class="tab-item active" href="./">
       <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
         <path d="M12 3 4 7v13l8-4 8 4V7L12 3zm6 17-6-3-6 3V8.5l6-3 6 3V20z"/>
       </svg>
       <span>Learn</span>
-    </button>
+    </a>
   </nav>
 
   <!-- Menu overlay and drawer — must be inside .app so z-index and positioning work consistently -->
@@ -120,6 +160,7 @@
     <div class="menu-toast" id="menu-toast"></div>
   </div>
 </div>
+<script src="items.js"></script>
 <script src="learning.js"></script>
 <script src="/js/menu.js"></script>
 <script src="/js/pwa.js"></script>

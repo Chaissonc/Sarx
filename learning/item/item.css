@@ -1,0 +1,152 @@
+.item-loading {
+  color: #aaa;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.item-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 6px;
+}
+
+.item-emoji {
+  font-size: 2.2rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.item-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.item-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  padding: 5px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.item-badge-pick         { background: #E8192C; color: #fff; }
+.item-badge-trend        { background: #FF9500; color: #fff; }
+.item-badge-personalized { background: #007AFF; color: #fff; }
+
+/* Dose / timing strip */
+.item-dosage-card {
+  display: flex;
+  gap: 12px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.item-dosage-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.item-dosage-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #aaa;
+}
+
+.item-dosage-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111;
+}
+
+/* Trend warning banner */
+.item-trend-warning {
+  background: #fff3cd;
+  border-left: 3px solid #FF9500;
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 0.85rem;
+  color: #7a5200;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* ── Description body ──────────────────────────── */
+
+.item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Opening paragraph — sits outside any card */
+.item-intro {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #444;
+  margin: 0;
+}
+
+/* Card wrapper for each content section */
+.item-section {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+/* Section header — e.g. "Add fermented foods" or "Top whole-food sources" */
+.item-section-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #E8192C;
+  margin: 0 0 10px;
+}
+
+/* Plain text inside a card */
+.item-section-text {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #444;
+  margin: 0;
+}
+
+/* Individual bullet row */
+.item-bullet {
+  padding: 10px 0;
+}
+
+.item-bullet-sep {
+  border-top: 1px solid #F0F0F5;
+}
+
+/* Bold title before the colon in a bullet */
+.item-bullet-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 3px;
+}
+
+/* Body text after the colon */
+.item-bullet-body {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #555;
+  margin: 0;
+}

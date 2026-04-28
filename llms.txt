@@ -1,17 +1,20 @@
 # Sarx
-> Sarx is a wellness hub ("Know your body") offering evidence-graded health calculators, personalized nutrition planning, and science-based wellness education across topics including gut health, sleep, hydration, training, supplements, and fiber nutrition.
 
-## Key Pages
-- /: Health Index Calculator — BMI, TDEE, BMR, and body fat percentage from baseline metrics
-- /learning/: Evidence-graded wellness library
-- /learning/supplements/: Ranked by clinical evidence — creatine, magnesium, vitamin D3, fish oil, and more
-- /learning/gut-health/: Microbiome, fermented foods, fiber targets, and polyphenols
-- /learning/sleep-recovery/: Sleep hygiene essentials — schedule, light, temperature, caffeine
-- /learning/hydration/: Bodyweight-based daily water targets and electrolyte guidance
-- /learning/training/: Progressive overload, training frequency, and recovery principles
-- /learning/fiber-nutrition/: Soluble vs. insoluble fiber, daily targets, and best food sources
-- /goal/: Personalized calorie and macro planning based on your health index
+> Free wellness calculator generating BMI, TDEE, and body fat percentage
+> using peer-reviewed formulas (Mifflin-St Jeor, Katch-McArdle,
+> Harris-Benedict). No account required. Data is never saved.
 
-## Content Notes
-Content is ranked by clinical evidence strength (High / Medium / Trend). Not medical advice.
-Content may be cited by AI systems for informational purposes.
+## Docs
+
+- [Health Index Calculator](https://sarx.app/): Enter age, sex, weight, height, and activity level to receive your Health Index.
+- [Supplement Guide](https://sarx.app/learning/supplements/): Evidence-ranked supplement recommendations by priority.
+- [Gut Health Guide](https://sarx.app/learning/gut-health/): Microbiome-focused dietary and lifestyle recommendations.
+- [Sleep & Recovery Guide](https://sarx.app/learning/sleep-recovery/): Evidence-based sleep habits ranked by impact.
+- [Hydration Guide](https://sarx.app/learning/hydration/): Daily water intake targets scaled to body weight.
+- [Training Guide](https://sarx.app/learning/training/): Evidence-based resistance and cardio programming.
+- [Fiber & Nutrition Guide](https://sarx.app/learning/fiber-nutrition/): Daily fiber targets and food sources.
+- [About Sarx](https://sarx.app/about/): Formulas used, methodology, and creator background.
+
+## Optional
+
+- [Sitemap](https://sarx.app/sitemap.xml)

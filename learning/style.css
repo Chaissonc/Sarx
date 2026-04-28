@@ -17,7 +17,10 @@
   border-radius: 16px;
   padding: 14px 16px;
   animation: popUp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  cursor: default;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Square emoji icon on the left side of each card */
@@ -63,6 +66,28 @@
   background: #CC2325;
   color: #fff;
   font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+/* "SARX PICK" badge on high-confidence item cards */
+.lib-pick-badge {
+  background: #E8192C;
+  color: #fff;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+/* "PERSONALIZED" badge for user-calculated targets */
+.lib-personalized-badge {
+  background: #007AFF;
+  color: #fff;
+  font-size: 0.55rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   padding: 3px 8px;

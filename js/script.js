@@ -25,6 +25,18 @@ function calculate() {
     document.getElementById("formError").textContent = "Please fill in all fields.";
     return;
   }
+  if (age < 10 || age > 99) {
+    document.getElementById("formError").textContent = "Please enter a valid age.";
+    return;
+  }
+  if (weight < 50 || weight > 600) {
+    document.getElementById("formError").textContent = "Please enter a valid weight.";
+    return;
+  }
+  if (heightIn < 0 || heightIn > 11) {
+    document.getElementById("formError").textContent = "Inches must be between 0 and 11.";
+    return;
+  }
   document.getElementById("formError").textContent = "";
 
   // Convert everything to metric for the formulas

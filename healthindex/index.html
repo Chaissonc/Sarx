@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Health Index — Your BMI, TDEE &amp; Body Fat | Sarx</title>
   <meta name="robots" content="noindex, follow">
   <link rel="canonical" href="https://sarx.app/healthindex/">
@@ -21,6 +21,10 @@
   <meta property="og:description" content="Your personal BMI, TDEE, BMR, and body fat percentage.">
   <meta property="og:image" content="https://sarx.app/assets/socialImage.png">
   <meta property="og:url" content="https://sarx.app/healthindex/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Health Index — Sarx">
+  <meta name="twitter:description" content="Your personal BMI, TDEE, BMR, and body fat percentage.">
+  <meta name="twitter:image:alt" content="Sarx — Free Health Index Calculator">
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -98,30 +102,30 @@
       </div>
     </div>
 
-    <button class="primary-btn" onclick="location.href='../goal/'">CREATE PLAN</button>
+    <button class="primary-btn" onclick="location.href='../plan/'">CREATE PLAN</button>
   </div>
 
   <nav class="tab-bar">
-    <button class="tab-item active" onclick="location.href='./'">
+    <a class="tab-item active" href="./">
       <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
         <rect x="3" y="13" width="4" height="8" rx="1"/>
         <rect x="10" y="8" width="4" height="13" rx="1"/>
         <rect x="17" y="3" width="4" height="18" rx="1"/>
       </svg>
       <span>Index</span>
-    </button>
-    <button class="tab-item" onclick="location.href='../goal/'">
+    </a>
+    <a class="tab-item" href="../plan/">
       <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
         <path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/>
       </svg>
       <span>Plan</span>
-    </button>
-    <button class="tab-item" onclick="location.href='../learning/'">
+    </a>
+    <a class="tab-item" href="../learning/">
       <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
         <path d="M12 3 4 7v13l8-4 8 4V7L12 3zm6 17-6-3-6 3V8.5l6-3 6 3V20z"/>
       </svg>
       <span>Learn</span>
-    </button>
+    </a>
   </nav>
 
   <div class="menu-overlay" id="menu-overlay" onclick="closeMenu()"></div>

@@ -55,7 +55,12 @@
   margin-top: 10px;
 }
 
-/* "NEW" / "COMING SOON — NEAREST FIRST" section labels */
+/* Past update cards — no badge, slightly dimmed */
+.updates-list .updates-section-label:last-of-type ~ .update-card {
+  opacity: 0.6;
+}
+
+/* "NEW" / "COMING SOON" section labels */
 .updates-section-label {
   font-size: 0.65rem;
   font-weight: 700;

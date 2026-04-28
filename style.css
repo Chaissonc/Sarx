@@ -433,6 +433,8 @@ a:has(.logo-img) .logo-img { margin: 0; }
   font-size: 0.62rem;
   font-weight: 600;
   letter-spacing: 0.04em;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .tab-item.active { color: #CC2325; }

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Sarx — Free Health Index Calculator | BMI, TDEE &amp; Body Fat</title>
   <link rel="canonical" href="https://sarx.app/">
   <meta name="description" content="Calculate your BMI, TDEE, and body fat percentage for free. Sarx gives you a personalized health index — no account required.">
@@ -23,7 +23,22 @@
   <meta property="og:url" content="https://sarx.app/">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sarx — Know your body.">
+  <meta name="twitter:description" content="Calculate your BMI, TDEE, and body fat for free. Your personalized health index — no account required.">
+  <meta name="twitter:image:alt" content="Sarx — Free Health Index Calculator">
   <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Sarx",
+    "url": "https://sarx.app",
+    "logo": "https://sarx.app/assets/logo.png",
+    "description": "Free wellness calculator and evidence-based health learning hub.",
+    "foundingDate": "2024",
+    "sameAs": []
+  }
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -42,6 +57,7 @@
     "description": "A free wellness web app that calculates BMI, TDEE, BMR, and body fat percentage from your baseline metrics. Includes personalized calorie and macro planning, and an evidence-ranked wellness library.",
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Any",
+    "datePublished": "2024-01-01",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
     "featureList": ["BMI calculator", "TDEE calculator", "BMR calculator", "Body fat percentage estimator", "Calorie goal planner", "Macro breakdown", "Evidence-ranked wellness guides"],
     "screenshot": "https://sarx.app/assets/socialImage.png"
@@ -68,14 +84,14 @@
       <div class="field-group">
         <label class="field-label">CURRENT AGE</label>
         <div class="input-row">
-          <input class="field-input age" type="number" inputmode="decimal" placeholder="28">
+          <input class="field-input age" type="number" inputmode="decimal" placeholder="28" min="10" max="99" oninput="if(this.value.length>2)this.value=this.value.slice(0,2)">
           <span class="input-unit">YRS</span>
         </div>
       </div>
       <div class="field-group">
         <label class="field-label">BODY MASS</label>
         <div class="input-row">
-          <input class="field-input bodyWeight" type="number" inputmode="decimal" placeholder="185">
+          <input class="field-input bodyWeight" type="number" inputmode="decimal" placeholder="185" min="50" max="600" oninput="if(this.value.length>3)this.value=this.value.slice(0,3)">
           <span class="input-unit">LBS</span>
         </div>
       </div>
@@ -83,11 +99,11 @@
         <label class="field-label">HEIGHT</label>
         <div class="height-row">
           <div class="input-row">
-            <input class="field-input heightFt" type="number" inputmode="decimal" placeholder="5" min="0">
+            <input class="field-input heightFt" type="number" inputmode="decimal" placeholder="5" min="0" max="9" oninput="if(this.value.length>1)this.value=this.value.slice(0,1)">
             <span class="input-unit">FT</span>
           </div>
           <div class="input-row">
-            <input class="field-input heightIn" type="number" inputmode="decimal" placeholder="10" min="0" max="11">
+            <input class="field-input heightIn" type="number" inputmode="decimal" placeholder="10" min="0" max="11" oninput="if(this.value.length>2)this.value=this.value.slice(0,2);if(parseInt(this.value)>11)this.value=11">
             <span class="input-unit">IN</span>
           </div>
         </div>
