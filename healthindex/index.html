@@ -43,7 +43,7 @@
     <div class="stats-bar" id="stats-bar"></div>
 
     <div class="metric-pair">
-      <div class="metric-card anim-card anim-d1">
+      <div class="metric-card anim-card anim-d1 focus-clickable" onclick="openFocus('bmi')">
         <span class="metric-label">BMI</span>
         <span class="metric-value" id="val-bmi">--</span>
         <span class="metric-sub" id="bmi-category">--</span>
@@ -103,6 +103,19 @@
     </div>
 
     <button class="primary-btn" onclick="location.href='../plan/'">CREATE PLAN</button>
+  </div>
+
+  <!-- Focus modal -->
+  <div class="focus-overlay" id="focus-overlay" onclick="if(event.target===this)closeFocus()">
+    <div class="focus-card" id="focus-card">
+      <div class="focus-header">
+        <span class="focus-label" id="focus-label"></span>
+        <button class="focus-close" onclick="closeFocus()" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="focus-body"></div>
+    </div>
   </div>
 
   <nav class="tab-bar">

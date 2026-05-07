@@ -277,3 +277,10 @@
   color: #fff;
   line-height: 1.6;
 }
+
+.lib-intro {
+  font-size: 0.82rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}

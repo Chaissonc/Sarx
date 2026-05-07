@@ -7,13 +7,31 @@
 ## Docs
 
 - [Health Index Calculator](https://sarx.app/): Enter age, sex, weight, height, and activity level to receive your Health Index.
-- [Supplement Guide](https://sarx.app/learning/supplements/): Evidence-ranked supplement recommendations by priority.
-- [Gut Health Guide](https://sarx.app/learning/gut-health/): Microbiome-focused dietary and lifestyle recommendations.
-- [Sleep & Recovery Guide](https://sarx.app/learning/sleep-recovery/): Evidence-based sleep habits ranked by impact.
-- [Hydration Guide](https://sarx.app/learning/hydration/): Daily water intake targets scaled to body weight.
-- [Training Guide](https://sarx.app/learning/training/): Evidence-based resistance and cardio programming.
-- [Fiber & Nutrition Guide](https://sarx.app/learning/fiber-nutrition/): Daily fiber targets and food sources.
+- [Learning Library](https://sarx.app/learning/): Evidence-ranked wellness guides by clinical priority.
 - [About Sarx](https://sarx.app/about/): Formulas used, methodology, and creator background.
+
+## Learning Library — Supplements
+
+- [Creatine Monohydrate](https://sarx.app/learning/creatine-monohydrate/): The most-studied supplement in sports science. 5g daily for strength, muscle mass, and high-intensity performance.
+- [Magnesium Glycinate](https://sarx.app/learning/magnesium-glycinate/): 200–400mg evening. Supports sleep quality, reduces muscle cramps, and counteracts stress-elevated cortisol.
+- [Vitamin D3 + K2](https://sarx.app/learning/vitamin-d3-k2/): 2,000–5,000 IU with fat. D3 raises serum levels; K2 directs calcium to bones, not arterial walls.
+- [Fish Oil (EPA/DHA)](https://sarx.app/learning/fish-oil/): 2–3g combined daily. Reduces systemic inflammation, supports cardiovascular health, and improves body composition.
+- [Whey Protein](https://sarx.app/learning/whey-protein/): 20–40g post-workout. Fastest-digesting complete protein. Use when whole food protein isn't accessible.
+- [Zinc Picolinate](https://sarx.app/learning/zinc-picolinate/): 15–30mg evening. Supports testosterone, immunity, and wound healing. Picolinate form absorbs better than zinc oxide.
+- [Ashwagandha KSM-66](https://sarx.app/learning/ashwagandha/): 300–600mg daily. Evidence-backed for cortisol reduction and stress adaptation. Effects build over 4–8 weeks.
+- [Caffeine](https://sarx.app/learning/caffeine/): 3–6mg/kg body weight, 30 min pre-workout. One of the most effective performance enhancers. Hard cutoff at noon.
+
+## Learning Library — Health
+
+- [Daily Protein Target](https://sarx.app/learning/daily-protein-target/): 0.7–1.0g per pound of bodyweight per day. Primary driver of muscle protein synthesis.
+- [Daily Fiber Target](https://sarx.app/learning/daily-fiber-target/): 14g per 1,000 calories. Feeds gut bacteria, slows glucose absorption, and reduces LDL cholesterol.
+- [Daily Water Target](https://sarx.app/learning/daily-water-target/): Half your bodyweight in fluid ounces per day. Individualized baseline that scales better than fixed recommendations.
+- [Gut Health](https://sarx.app/learning/gut-health/): Fermented foods and reducing ultra-processed foods are the two highest-impact levers for microbiome health.
+- [Circadian Rhythm](https://sarx.app/learning/circadian-rhythm/): Sleep schedule, morning sunlight, caffeine timing, meal cutoff, room temperature, and screen habits — the full picture.
+- [Electrolytes](https://sarx.app/learning/electrolytes/): 1–2g sodium during training. Replaces sweat losses and prevents hyponatremia at high training volumes.
+- [Progressive Overload](https://sarx.app/learning/progressive-overload/): Add stimulus over time — weight, reps, or quality. Without it, adaptation stops.
+- [Workout Essentials](https://sarx.app/learning/workout-essentials/): Compound movements, 2x/week frequency, training near failure, volume targets, and rest periods.
+- [Apple Cider Vinegar](https://sarx.app/learning/apple-cider-vinegar/): Trend warning. The alkalizing mechanism doesn't survive stomach acid. Evidence is weak and manufacturer-funded.
 
 ## Optional
 

@@ -60,6 +60,17 @@
     </a>
   </nav>
 </div>
+<script>
+  // Redirect ?id=X to the static page /learning/X/
+  (function() {
+    var slugOverride = { 'bodyweight-hydration': 'daily-water-target' };
+    var id = new URLSearchParams(location.search).get('id');
+    if (id) {
+      var slug = slugOverride[id] || id;
+      window.location.replace('/learning/' + slug + '/');
+    }
+  })();
+</script>
 <script src="../items.js"></script>
 <script src="item.js"></script>
 <script src="/js/pwa.js"></script>

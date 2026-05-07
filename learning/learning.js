@@ -16,6 +16,9 @@ function getPersonalizedDosage(item) {
   return null;
 }
 
+var slugOverride = { 'bodyweight-hydration': 'daily-water-target' };
+function itemSlug(item) { return slugOverride[item.id] || item.id; }
+
 function renderItems(filter) {
   var filtered = (filter === "all" ? allItems : allItems.filter(function(item) { return item.topic === filter; }))
     .slice()
@@ -50,7 +53,7 @@ function renderItems(filter) {
         ? '<span class="lib-pick-badge">SARX PICK</span>'
         : '<span class="' + evClass + '"><span class="topic-evidence-dot"></span>' + evLabel + '</span>';
     var style = "animation-delay:" + (i * 0.04) + "s";
-    return '<a class="lib-card" href="/learning/item/?id=' + item.id + '" style="' + style + '">' +
+    return '<a class="lib-card" href="/learning/' + itemSlug(item) + '/" style="' + style + '">' +
       '<div class="lib-icon">' + item.emoji + '</div>' +
       '<div class="lib-card-body">' +
         '<p class="lib-card-title">' + item.title + '</p>' +
