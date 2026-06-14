@@ -6,7 +6,7 @@ const itemsSrc = fs.readFileSync(path.join(__dirname, '../learning/items.js'), '
 eval(itemsSrc); // exposes allItems
 
 const ROOT = path.join(__dirname, '..');
-const TODAY = '2026-05-06';
+const TODAY = new Date().toISOString().slice(0, 10);
 
 // Items whose id doesn't make a clean URL slug
 const slugOverride = { 'bodyweight-hydration': 'daily-water-target' };
@@ -98,6 +98,59 @@ function buildPage(item) {
       + `</div>`;
   }
 
+  let personalizedCard = '';
+  let personalizedScript = '';
+  if (item.id === 'daily-protein-target') {
+    personalizedCard = `<div class="item-personalized-card" id="personalizedCard">
+      <p class="item-personalized-label">PERSONALIZED TO YOU</p>
+      <p class="item-personalized-value" id="personalizedValue"></p>
+      <p class="item-personalized-sub" id="personalizedSub"></p>
+    </div>`;
+    personalizedScript = `<script>
+(function() {
+  var gw = parseFloat(localStorage.getItem("bm_goalWeight"));
+  var w  = parseFloat(localStorage.getItem("bm_weight"));
+  var v  = gw ? Math.round(gw) : (w ? Math.round(w) : 0);
+  if (!v) return;
+  document.getElementById("personalizedValue").textContent = v + "g / day";
+  document.getElementById("personalizedSub").textContent   = gw ? "Based on your goal weight" : "Based on your body weight";
+  document.getElementById("personalizedCard").style.display = "block";
+})();
+<\/script>`;
+  } else if (item.id === 'bodyweight-hydration') {
+    personalizedCard = `<div class="item-personalized-card" id="personalizedCard">
+      <p class="item-personalized-label">PERSONALIZED TO YOU</p>
+      <p class="item-personalized-value" id="personalizedValue"></p>
+      <p class="item-personalized-sub" id="personalizedSub"></p>
+    </div>`;
+    personalizedScript = `<script>
+(function() {
+  var w = parseFloat(localStorage.getItem("bm_weight"));
+  if (!w) return;
+  var oz = Math.round(w * 0.5);
+  document.getElementById("personalizedValue").textContent = oz + " oz / day";
+  document.getElementById("personalizedSub").textContent   = "~" + Math.round(oz / 8) + " cups · based on your body weight";
+  document.getElementById("personalizedCard").style.display = "block";
+})();
+<\/script>`;
+  } else if (item.id === 'daily-fiber-target') {
+    personalizedCard = `<div class="item-personalized-card" id="personalizedCard">
+      <p class="item-personalized-label">PERSONALIZED TO YOU</p>
+      <p class="item-personalized-value" id="personalizedValue"></p>
+      <p class="item-personalized-sub" id="personalizedSub"></p>
+    </div>`;
+    personalizedScript = `<script>
+(function() {
+  var tdee = parseFloat(localStorage.getItem("bm_tdee"));
+  if (!tdee) return;
+  var g = Math.min(Math.round((tdee / 1000) * 14), 38);
+  document.getElementById("personalizedValue").textContent = g + "g / day";
+  document.getElementById("personalizedSub").textContent   = "Based on your " + Math.round(tdee) + " kcal intake";
+  document.getElementById("personalizedCard").style.display = "block";
+})();
+<\/script>`;
+  }
+
   const trendWarn = item.trend
     ? `<div class="item-trend-warning"><strong>Trend Warning:</strong> This is currently popular online but has limited or mixed clinical evidence. Use caution before adding it to your routine.</div>`
     : '';
@@ -183,11 +236,11 @@ function buildPage(item) {
       <h1 class="screen-title" style="margin-bottom:8px">${esc(item.title)}</h1>
     </div>
     <div class="item-badges">${badges}</div>
+    ${personalizedCard}
     ${dosage}
     ${trendWarn}
     <div class="item-body">${renderDesc(item.desc)}</div>
-    <p class="item-byline">Written by <a href="https://chaissoncook.com">Chaisson Cook</a></p>
-    <p class="item-disclaimer">This content is for informational purposes only and does not constitute medical advice. Consult a qualified healthcare provider before making health decisions.</p>
+<p class="item-disclaimer">This content is for informational purposes only and does not constitute medical advice. Consult a qualified healthcare provider before making health decisions.</p>
 
   </div>
 
@@ -214,6 +267,7 @@ function buildPage(item) {
     </a>
   </nav>
 </div>
+${personalizedScript}
 <script src="/js/pwa.js"></script>
 </body>
 </html>`;

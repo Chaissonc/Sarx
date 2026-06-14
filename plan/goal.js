@@ -205,7 +205,10 @@ function updateGoalPlanner() {
   // Calculate grams for each macro using the selected diet split
   // Protein and carbs = 4 cal/g, fat = 9 cal/g
   var split = dietSplits[selectedDiet] || dietSplits["balanced"];
-  document.getElementById("macro-protein").textContent     = Math.round(targetCals * split.protein / 4);
+  var _goalWt = parseFloat(localStorage.getItem("bm_goalWeight"));
+  var proteinGrams = Math.round(targetCals * split.protein / 4);
+  if (_goalWt && proteinGrams > Math.round(_goalWt) + 20) proteinGrams = Math.round(_goalWt) + 20;
+  document.getElementById("macro-protein").textContent     = proteinGrams;
   document.getElementById("macro-carbs").textContent       = Math.round(targetCals * split.carbs   / 4);
   document.getElementById("macro-fat").textContent         = Math.round(targetCals * split.fat     / 9);
   document.getElementById("macro-protein-pct").textContent = Math.round(split.protein * 100) + "%";

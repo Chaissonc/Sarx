@@ -72,6 +72,38 @@
   color: #111;
 }
 
+/* Personalized target card */
+.item-personalized-card {
+  display: none;
+  background: linear-gradient(135deg, rgba(0,122,255,0.06) 0%, rgba(0,122,255,0.02) 100%);
+  border: 1.5px solid rgba(0,122,255,0.18);
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.item-personalized-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #007AFF;
+  margin: 0 0 6px;
+}
+
+.item-personalized-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #111;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.item-personalized-sub {
+  font-size: 0.75rem;
+  color: #888;
+  margin: 5px 0 0;
+}
+
 /* Trend warning banner */
 .item-trend-warning {
   background: #fff3cd;
@@ -124,6 +156,16 @@
   line-height: 1.6;
   color: #444;
   margin: 0;
+}
+
+/* Disclaimer footnote */
+.item-disclaimer {
+  font-size: 0.7rem;
+  font-weight: 300;
+  color: #bbb;
+  line-height: 1.55;
+  text-align: center;
+  margin: 36px 0 0;
 }
 
 /* Individual bullet row */

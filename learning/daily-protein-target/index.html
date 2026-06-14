@@ -6,16 +6,16 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Daily Protein Target — Health | Sarx</title>
-  <meta name="description" content="Protein is the primary driver of muscle protein synthesis. The evidence-based range is 0.7–1.0g per pound of bodyweight. Higher intakes (up to 1.2g/lb) ...">
+  <meta name="description" content="Protein is the primary driver of muscle protein synthesis. Intakes up to 1.2g/lb are safe and may benefit those in a caloric deficit. Spread intake acro...">
   <link rel="canonical" href="https://sarx.app/learning/daily-protein-target/">
   <meta property="og:title" content="Daily Protein Target — Sarx">
-  <meta property="og:description" content="Protein is the primary driver of muscle protein synthesis. The evidence-based range is 0.7–1.0g per pound of bodyweight. Higher intakes (up to 1.2g/lb) ...">
+  <meta property="og:description" content="Protein is the primary driver of muscle protein synthesis. Intakes up to 1.2g/lb are safe and may benefit those in a caloric deficit. Spread intake acro...">
   <meta property="og:image" content="https://sarx.app/assets/socialImage.png">
   <meta property="og:url" content="https://sarx.app/learning/daily-protein-target/">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Daily Protein Target — Sarx">
-  <meta name="twitter:description" content="Protein is the primary driver of muscle protein synthesis. The evidence-based range is 0.7–1.0g per pound of bodyweight. Higher intakes (up to 1.2g/lb) ...">
+  <meta name="twitter:description" content="Protein is the primary driver of muscle protein synthesis. Intakes up to 1.2g/lb are safe and may benefit those in a caloric deficit. Spread intake acro...">
   <meta name="twitter:image:alt" content="Sarx — Daily Protein Target">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,10 +34,10 @@
   "@type": "Article",
   "@id": "https://sarx.app/learning/daily-protein-target/#article",
   "headline": "Daily Protein Target",
-  "description": "Protein is the primary driver of muscle protein synthesis. The evidence-based range is 0.7–1.0g per pound of bodyweight. Higher intakes (up to 1.2g/lb) ...",
+  "description": "Protein is the primary driver of muscle protein synthesis. Intakes up to 1.2g/lb are safe and may benefit those in a caloric deficit. Spread intake acro...",
   "url": "https://sarx.app/learning/daily-protein-target/",
   "datePublished": "2026-04-25",
-  "dateModified": "2026-05-06",
+  "dateModified": "2026-06-14",
   "inLanguage": "en-US",
   "author": {
     "@type": "Person",
@@ -106,11 +106,15 @@
       <h1 class="screen-title" style="margin-bottom:8px">Daily Protein Target</h1>
     </div>
     <div class="item-badges"><span class="item-badge item-badge-pick">SARX PICK</span><span class="item-badge topic-evidence evidence-high"><span class="topic-evidence-dot"></span>HIGH EVIDENCE</span></div>
+    <div class="item-personalized-card" id="personalizedCard">
+      <p class="item-personalized-label">PERSONALIZED TO YOU</p>
+      <p class="item-personalized-value" id="personalizedValue"></p>
+      <p class="item-personalized-sub" id="personalizedSub"></p>
+    </div>
     <div class="item-dosage-card"><div class="item-dosage-cell"><span class="item-dosage-label">DOSE</span><span class="item-dosage-value">0.7–1.0g / lb</span></div><div class="item-dosage-cell"><span class="item-dosage-label">TIMING</span><span class="item-dosage-value">Daily</span></div></div>
     
-    <div class="item-body"><p class="item-intro">Protein is the primary driver of muscle protein synthesis. The evidence-based range is 0.7–1.0g per pound of bodyweight. Higher intakes (up to 1.2g/lb) are safe and may benefit those in a caloric deficit.</p></div>
-    <p class="item-byline">Written by <a href="https://chaissoncook.com">Chaisson Cook</a></p>
-    <p class="item-disclaimer">This content is for informational purposes only and does not constitute medical advice. Consult a qualified healthcare provider before making health decisions.</p>
+    <div class="item-body"><p class="item-intro">Protein is the primary driver of muscle protein synthesis. Intakes up to 1.2g/lb are safe and may benefit those in a caloric deficit. Spread intake across meals; muscle protein synthesis peaks at roughly 30–50g per sitting.</p></div>
+<p class="item-disclaimer">This content is for informational purposes only and does not constitute medical advice. Consult a qualified healthcare provider before making health decisions.</p>
 
   </div>
 
@@ -137,6 +141,17 @@
     </a>
   </nav>
 </div>
+<script>
+(function() {
+  var gw = parseFloat(localStorage.getItem("bm_goalWeight"));
+  var w  = parseFloat(localStorage.getItem("bm_weight"));
+  var v  = gw ? Math.round(gw) : (w ? Math.round(w) : 0);
+  if (!v) return;
+  document.getElementById("personalizedValue").textContent = v + "g / day";
+  document.getElementById("personalizedSub").textContent   = gw ? "Based on your goal weight" : "Based on your body weight";
+  document.getElementById("personalizedCard").style.display = "block";
+})();
+</script>
 <script src="/js/pwa.js"></script>
 </body>
 </html>
