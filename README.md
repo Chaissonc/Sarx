@@ -20,22 +20,22 @@ Your core metrics at a glance.
 - **TDEE** — total daily burn based on activity level
 - **Weight range** — where you fall on the healthy weight spectrum
 
-### Objective
+### Plan
 Set a goal, get a real plan.
 - Enter a target weight — Cut / Maintain / Lean Bulk auto-selects based on direction
 - Choose your aggression level
 - Outputs: daily calorie target, macro split (protein / carbs / fat), and estimated time to goal
 
-### Learn *(coming soon)*
-Wellness education, topic by topic. The knowledge you need to make your numbers mean something — not just tracking, but understanding.
+### Learn
+Wellness education, evidence-tiered item by item. The knowledge you need to make your numbers mean something — not just tracking, but understanding.
 
-Topics dropping soon:
-- Gut Health & Microbiome
-- Supplements That Actually Work
-- Workout Foundations
-- Fiber & Nutrition Basics
-- Sleep & Recovery
-- Hydration
+18 items and counting, spanning:
+- Supplements (creatine, magnesium, D3+K2, fish oil, whey, zinc, ashwagandha, caffeine)
+- Daily targets (protein, fiber, water)
+- Gut health, circadian rhythm, electrolytes, progressive overload, workout essentials
+- Trend warnings on popular but weakly-evidenced claims (e.g. apple cider vinegar)
+
+Each item is evidence-tiered (High / Medium / Trend) with dosage and timing where relevant.
 
 > **Beta notice:** Sarx is currently in beta. UI, features, and content are actively evolving. Feedback shapes what comes next.
 
@@ -58,31 +58,30 @@ No frameworks, no dependencies, no build step.
 ## Project Structure
 
 ```
-Sarx/
+Body-Metric/            # repo folder name; product is Sarx
 ├── index.html          # Onboarding form — age, weight, height, sex, activity
-├── healthindex/        # Health Index — BMI, TDEE/BMR, body fat, weight bar
-├── objective/          # Goal planner — target weight, macros, time-to-goal
-├── learning/           # Learn tab — topic cards (content in progress)
-├── script.js           # Shared calc logic
-├── style.css           # Global styles
-└── assets/             # Logo, icon, favicon
+├── style.css            # Global styles
+├── js/                   # Onboarding logic, side drawer, PWA install
+├── healthindex/         # Health Index — BMI, TDEE/BMR, body fat, weight bar, Focus Cards
+├── plan/                # Goal planner — target weight, macros, time-to-goal
+├── learning/            # Learn tab — 18 evidence-tiered items, data-driven
+├── scripts/              # generate_pages.js — builds learning pages from learning/items.js
+└── assets/              # Logo, icon, favicon
 ```
 
 ---
 
 ## Roadmap
 
-### Now — Phase 1 (Web App)
-- [x] Health Index — BMI, TDEE, BMR, body fat %, weight range
+### Done — Phase 1 (Web App)
+- [x] Health Index — BMI, TDEE, BMR, body fat %, weight range, Focus Cards
 - [x] Goal planner — Cut / Maintain / Lean Bulk, macros, time-to-goal
 - [x] Persistent profile via localStorage
-- [ ] **Learn tab** — full wellness education content
-- [ ] **AI Coach** — floating, context-aware assistant wired to the Claude API
+- [x] Learn tab — 18-item evidence-tiered wellness library
 
-### Next — Phase 2 (Backend)
-- [ ] Node.js + Express + PostgreSQL
-- [ ] Real accounts and persistent profiles
-- [ ] Deploy on Render / Railway
+### Next — Phase 2 (Supabase)
+- [ ] **Accounts & cross-device sync** — Supabase auth + Postgres, real accounts, profile persists across devices
+- [ ] **AI Coach** — floating, context-aware assistant wired to the Claude API, built after accounts ship
 
 ### Later — Phase 3 & 4 (Mobile)
 - [ ] Capacitor wrap → App Store v1
