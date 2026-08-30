@@ -1,0 +1,38 @@
+/* ─────────────────────────────────────────
+   PRIVACY POLICY PAGE
+───────────────────────────────────────── */
+
+.privacy-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 40px;
+}
+
+.privacy-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px;
+}
+
+.privacy-card-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #E8192C;
+  margin-bottom: 10px;
+}
+
+.privacy-card p {
+  font-size: 0.85rem;
+  color: #333;
+  line-height: 1.65;
+}
+
+.privacy-card p + p { margin-top: 10px; }
+
+.privacy-link {
+  color: #E8192C;
+  text-decoration: none;
+  font-weight: 600;
+}

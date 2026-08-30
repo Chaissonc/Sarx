@@ -1,8 +1,26 @@
 // If the user already has data saved, skip the form and send them straight to their health index.
 // The ?edit param lets them come back here to change their numbers.
-if (localStorage.getItem("bm_tdee") && !new URLSearchParams(window.location.search).has('edit')) {
-  window.location.replace("healthindex/");
-}
+(async function gate() {
+  const isEditingIntake = new URLSearchParams(window.location.search).has('edit');
+  if (isEditingIntake) return;
+
+  if (localStorage.getItem("bm_tdee")) {
+    window.location.replace("healthindex/");
+    return;
+  }
+
+  if (!localStorage.getItem("bm_authed")) {
+    // First-time visitor with no local data yet — offer sign up/in, with a skip-to-guest option.
+    // bm_authed is set the moment they sign in OR choose to continue as a guest, so this only ever shows once.
+    window.location.replace("auth/");
+    return;
+  }
+
+  // Signed in (or previously chose guest) but this device's local cache is empty —
+  // check Supabase in case this is a new/cleared device with a profile already saved.
+  const found = await hydrateProfileFromSupabase();
+  if (found) window.location.replace("healthindex/");
+})();
 
 let selectedSex = null; // tracked separately because it's a button, not a real input field
 
@@ -13,8 +31,8 @@ function selectSex(btn, sex) {
   btn.classList.add("active");
 }
 
-// Runs all the health math and saves everything to localStorage, then redirects to the index page
-function calculate() {
+// Runs all the health math and saves everything (localStorage, plus Supabase if signed in), then redirects
+async function calculate() {
   const weight         = parseFloat(document.querySelector(".bodyWeight").value);
   const heightFt       = parseFloat(document.querySelector(".heightFt").value);
   const heightIn       = parseFloat(document.querySelector(".heightIn").value) || 0;
@@ -25,8 +43,10 @@ function calculate() {
     document.getElementById("formError").textContent = "Please fill in all fields.";
     return;
   }
-  if (age < 10 || age > 99) {
-    document.getElementById("formError").textContent = "Please enter a valid age.";
+  if (age <= 13 || age > 99) {
+    document.getElementById("formError").textContent = age <= 13
+      ? "You must be at least 14 to use Sarx."
+      : "Please enter a valid age.";
     return;
   }
   if (weight < 50 || weight > 600) {
@@ -77,23 +97,33 @@ function calculate() {
     bodyFat >= (selectedSex === "male" ? 8  : 16) &&
     bodyFat <= (selectedSex === "male" ? 20 : 28);
 
-  // Save everything so the index, plan, and other pages can read it
-  localStorage.setItem("bm_age",       age);
-  localStorage.setItem("bm_heightFt",  heightFt);
-  localStorage.setItem("bm_heightIn",  heightIn);
-  localStorage.setItem("bm_weight",    weight);
-  localStorage.setItem("bm_sex",       selectedSex);
-  localStorage.setItem("bm_activity",  activityFactor);
-  localStorage.setItem("bm_bmi",       bmi.toFixed(1));
-  localStorage.setItem("bm_bmiCat",    bmiCat);
-  localStorage.setItem("bm_bmr",       Math.round(bmr));
-  localStorage.setItem("bm_tdee",      Math.round(tdee));
-  localStorage.setItem("bm_bodyfat",   bodyFat.toFixed(1));
-  localStorage.setItem("bm_idealMin",  idealMin.toFixed(1));
-  localStorage.setItem("bm_idealMax",  idealMax.toFixed(1));
-  localStorage.setItem("bm_minWeight", minWeightLbs.toFixed(1));
-  localStorage.setItem("bm_status",    isOptimal ? "OPTIMAL" : "REVIEW");
+  // Save everything so the index, plan, and other pages can read it —
+  // writes to localStorage instantly, and to Supabase too if signed in.
+  const submitBtn = document.querySelector(".primary-btn");
+  const originalLabel = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = "SAVING...";
 
+  await saveProfile({
+    bm_age:       age,
+    bm_heightFt:  heightFt,
+    bm_heightIn:  heightIn,
+    bm_weight:    weight,
+    bm_sex:       selectedSex,
+    bm_activity:  activityFactor,
+    bm_bmi:       bmi.toFixed(1),
+    bm_bmiCat:    bmiCat,
+    bm_bmr:       Math.round(bmr),
+    bm_tdee:      Math.round(tdee),
+    bm_bodyfat:   bodyFat.toFixed(1),
+    bm_idealMin:  idealMin.toFixed(1),
+    bm_idealMax:  idealMax.toFixed(1),
+    bm_minWeight: minWeightLbs.toFixed(1),
+    bm_status:    isOptimal ? "OPTIMAL" : "REVIEW",
+  });
+
+  submitBtn.disabled = false;
+  submitBtn.textContent = originalLabel;
   window.location.href = "healthindex/";
 }
 

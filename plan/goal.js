@@ -7,6 +7,42 @@ var selectedGoal      = localStorage.getItem("bm_goal")      || null;
 var selectedIntensity = localStorage.getItem("bm_intensity") || "moderate";
 var selectedDiet      = localStorage.getItem("bm_diet")      || "balanced";
 
+// True once the user has typed their own calorie target — once set, goal/intensity/weight
+// changes (and page reloads) stop overwriting it with the auto-calculated value. Clearing
+// the calorie field resumes auto mode.
+var hasCustomCal = localStorage.getItem("bm_targetCalCustom") === "1";
+
+// Plan fields change on every keystroke/click — localStorage writes stay immediate
+// (below, unchanged) but the Supabase push is debounced so we're not firing a
+// network request per character typed. Fires ~600ms after the last change.
+//
+// This is a multi-page site, not an SPA — every tab-bar click, "Sign Out", or back
+// button is a full navigation that kills any pending setTimeout outright. So a plain
+// debounce can silently drop an edit if the user leaves within 600ms. The pagehide
+// listener below flushes immediately (skipping the wait, not the request) whenever
+// the user navigates away, so the sync gets the best possible chance to land first.
+var _goalSyncTimer = null;
+function syncGoalNow() {
+  saveProfile({
+    bm_goal:            selectedGoal,
+    bm_intensity:        selectedIntensity,
+    bm_diet:             selectedDiet,
+    bm_targetCal:        document.getElementById("targetCalInput").value,
+    bm_goalWeight:       document.getElementById("goalWeightInput").value,
+    bm_targetCalCustom:  hasCustomCal, // saveProfile passes real booleans straight to Supabase
+  });
+}
+function scheduleGoalSync() {
+  clearTimeout(_goalSyncTimer);
+  _goalSyncTimer = setTimeout(syncGoalNow, 600);
+}
+window.addEventListener("pagehide", function () {
+  if (_goalSyncTimer) {
+    clearTimeout(_goalSyncTimer);
+    syncGoalNow();
+  }
+});
+
 // Keeps the calorie input box as wide as its content — shrinks/grows as you type
 function resizeCalInput() {
   var input = document.getElementById("targetCalInput");
@@ -55,6 +91,7 @@ function updateGoalStatusLine() {
 function selectGoal(goal) {
   selectedGoal = goal;
   localStorage.setItem("bm_goal", goal);
+  scheduleGoalSync();
 
   var section = document.getElementById("intensitySection");
   if (goal === "maintain") {
@@ -91,9 +128,7 @@ function selectGoal(goal) {
     }
     section.style.pointerEvents = "";
     selectedIntensity = localStorage.getItem("bm_intensity") || "moderate";
-    document.querySelectorAll(".intensity-btn").forEach(function (b) { b.classList.remove("active"); });
-    var activeBtn = document.querySelector('.intensity-btn[data-intensity="' + selectedIntensity + '"]');
-    if (activeBtn) activeBtn.classList.add("active");
+    syncIntensityButtons();
   }
 
   // Update the arrow color between current and target weight
@@ -113,18 +148,56 @@ function selectGoal(goal) {
 function selectDiet(btn, diet) {
   selectedDiet = diet;
   localStorage.setItem("bm_diet", diet);
+  scheduleGoalSync();
   document.querySelectorAll("#diet-filters .lib-filter").forEach(function (b) { b.classList.remove("active"); });
   btn.classList.add("active");
   updateGoalPlanner();
 }
 
-// Called when the user picks an aggression level (Slow, Moderate, Aggressive)
+// Reflects the current state (a picked intensity, or a custom calorie override) onto the
+// four Slow/Moderate/Aggressive/Custom buttons. The Custom button just shares the
+// .intensity-btn class for this — it isn't a real intensity, so it's excluded from the query.
+function syncIntensityButtons() {
+  document.querySelectorAll(".intensity-btn").forEach(function (b) { b.classList.remove("active"); });
+  if (hasCustomCal) {
+    var customBtn = document.getElementById("customCalBtn");
+    if (customBtn) customBtn.classList.add("active");
+  } else {
+    var activeBtn = document.querySelector('.intensity-btn[data-intensity="' + selectedIntensity + '"]');
+    if (activeBtn) activeBtn.classList.add("active");
+  }
+}
+
+// Called when the user clicks the CUSTOM button itself (not by typing a number).
+// Blanks the calorie field so they can type their own value; if custom mode is
+// already active this is just a shortcut to focus the field.
+function selectCustomCal() {
+  var input = document.getElementById("targetCalInput");
+  if (!hasCustomCal) {
+    input.value = "";
+    localStorage.setItem("bm_targetCal", "");
+    hasCustomCal = true;
+    localStorage.setItem("bm_targetCalCustom", "1");
+    syncIntensityButtons();
+    scheduleGoalSync();
+    resizeCalInput();
+    document.getElementById("calDeltaLabel").textContent = "";
+    document.getElementById("timeToGoal").innerHTML = "";
+    resetMacros();
+  }
+  input.focus();
+}
+
+// Called when the user picks an aggression level (Slow, Moderate, Aggressive).
+// Explicitly picking one always means "use the calculated value" — clears any custom override.
 // If no valid goal weight is set yet, save the selection but don't recalculate anything
 function selectIntensity(btn, intensity) {
   selectedIntensity = intensity;
   localStorage.setItem("bm_intensity", intensity);
-  document.querySelectorAll(".intensity-btn").forEach(function (b) { b.classList.remove("active"); });
-  btn.classList.add("active");
+  hasCustomCal = false;
+  localStorage.setItem("bm_targetCalCustom", "0");
+  scheduleGoalSync();
+  syncIntensityButtons();
   var gw = parseFloat(document.getElementById("goalWeightInput").value);
   if (!gw || gw < 80) return;
   updateTargetCalFromGoal();
@@ -135,6 +208,7 @@ function selectIntensity(btn, intensity) {
 // These calorie offsets from TDEE are standard recommendations
 function updateTargetCalFromGoal() {
   if (!selectedGoal) return;
+  if (hasCustomCal) return; // don't clobber a manually-typed calorie target
   var offsets = {
     cut:         { slow: -250, moderate: -500, aggressive: -750 },
     maintain:    { slow: 0,    moderate: 0,    aggressive: 0    },
@@ -144,6 +218,7 @@ function updateTargetCalFromGoal() {
   var val = Math.round(tdee + offset);
   document.getElementById("targetCalInput").value = val;
   localStorage.setItem("bm_targetCal", val);
+  scheduleGoalSync();
   resizeCalInput();
 }
 
@@ -227,6 +302,11 @@ function resetMacros() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Restore any previously saved calorie target before deciding whether to auto-recalculate it.
+  // Needed for both custom values (updateTargetCalFromGoal() now skips these entirely) and the
+  // auto-calculated ones (it gets overwritten below anyway, but this avoids a blank flash first).
+  var savedTargetCal = localStorage.getItem("bm_targetCal");
+  if (savedTargetCal) document.getElementById("targetCalInput").value = savedTargetCal;
   resizeCalInput();
 
   // Restore the saved diet filter selection
@@ -250,8 +330,7 @@ document.addEventListener("DOMContentLoaded", function () {
       section.style.opacity = "1";
       section.style.transition = "";
       section.style.pointerEvents = "";
-      var intBtn = document.querySelector('.intensity-btn[data-intensity="' + selectedIntensity + '"]');
-      if (intBtn) intBtn.classList.add("active");
+      syncIntensityButtons();
     }
 
     // Only recalculate and show the plan if there's a valid saved goal weight
@@ -263,9 +342,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Manual calorie input — user can override the auto-calculated value
+  // Manual calorie input — user can override the auto-calculated value.
+  // Typing anything marks it custom (sticks through goal/intensity changes and reloads);
+  // clearing the field hands control back to the auto-calculation.
   document.getElementById("targetCalInput").addEventListener("input", function () {
     localStorage.setItem("bm_targetCal", this.value);
+    hasCustomCal = this.value.trim() !== "";
+    localStorage.setItem("bm_targetCalCustom", hasCustomCal ? "1" : "0");
+    syncIntensityButtons();
+    scheduleGoalSync();
     resizeCalInput();
     var cal = parseFloat(this.value);
 
@@ -293,6 +378,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Goal weight input — drives the whole plan page
   document.getElementById("goalWeightInput").addEventListener("input", function () {
     localStorage.setItem("bm_goalWeight", this.value);
+    scheduleGoalSync();
     var gw          = parseFloat(this.value);
     var warningEl   = document.getElementById("goalWarning");
     var statusLine  = document.getElementById("goalStatusLine");

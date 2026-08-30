@@ -150,7 +150,7 @@ function openFocus(type) {
     var catDescs = {
       "Underweight":   "Being underweight can signal insufficient caloric intake or an underlying condition. BMI under 18.5 is linked to nutritional deficiencies and reduced bone density.",
       "Healthy Range": "The 18.5–24.9 range is associated with the lowest disease risk from weight. Most adults here have stable metabolic markers.",
-      "Overweight":    "25–29.9 carries modestly elevated metabolic risk, but context matters — muscular individuals often land here despite healthy body composition.",
+      "Overweight":    "25–29.9 carries modestly elevated metabolic risk, but context matters. Muscular individuals often land here despite healthy body composition.",
       "Obese":         "A BMI of 30+ is associated with higher risk of type 2 diabetes, cardiovascular disease, and joint stress. This is a screening flag, not a clinical diagnosis."
     };
 
@@ -164,7 +164,7 @@ function openFocus(type) {
          +   '</div>'
          + '</div>'
          + '<p class="focus-desc">Your BMI of <strong>' + bmi + '</strong> places you in the <strong>' + bmiCat + '</strong> range. ' + (catDescs[bmiCat] || "") + '</p>'
-         + '<p class="focus-def">BMI (Body Mass Index) is a ratio of weight to height squared. It\'s a population-level screening tool — useful for identifying risk patterns, but not a direct measure of body composition. Muscular individuals often score in the overweight range despite healthy body fat levels.</p>';
+         + '<p class="focus-def">BMI (Body Mass Index) is a ratio of weight to height squared. It\'s a population-level screening tool, useful for identifying risk patterns, but not a direct measure of body composition. Muscular individuals often score in the overweight range despite healthy body fat levels.</p>';
 
     body.innerHTML = html;
 
@@ -194,7 +194,7 @@ function openFocus(type) {
          +   '</div>'
          + '</div>'
          + '<p class="focus-desc">Your TDEE breaks down into <strong>' + bmr.toLocaleString() + ' calories</strong> your body burns at rest (' + bmrPct + '%) and <strong>' + activityCal.toLocaleString() + ' calories</strong> from movement and activity. Eat below your TDEE to lose weight, above it to gain.</p>'
-         + '<p class="focus-def">TDEE (Total Daily Energy Expenditure) is the total calories your body burns in 24 hours — your resting metabolism combined with everything you burn through movement, exercise, and digestion. It\'s the single number that determines whether you gain, lose, or maintain weight.</p>';
+         + '<p class="focus-def">TDEE (Total Daily Energy Expenditure) is the total calories your body burns in 24 hours: your resting metabolism combined with everything you burn through movement, exercise, and digestion. It\'s the single number that determines whether you gain, lose, or maintain weight.</p>';
 
     body.innerHTML = html;
 
@@ -211,8 +211,8 @@ function openFocus(type) {
          +   '<div class="focus-target"><span class="focus-target-label">DURING SLEEP</span><span class="focus-target-val">' + sleep8.toLocaleString() + '</span></div>'
          +   '<div class="focus-target"><span class="focus-target-label">WAKING REST</span><span class="focus-target-val">' + waking16.toLocaleString() + '</span></div>'
          + '</div>'
-         + '<p class="focus-desc">Your body burns <strong>' + perHour + ' calories per hour</strong> at complete rest — that\'s <strong>' + sleep8.toLocaleString() + ' calories</strong> while you sleep and <strong>' + waking16.toLocaleString() + ' calories</strong> during your waking hours before any movement is added.</p>'
-         + '<p class="focus-def">BMR (Basal Metabolic Rate) is calculated using the Mifflin-St Jeor equation — the most accurate population-level formula according to the Academy of Nutrition and Dietetics. It accounts for age, sex, height, and weight. Physical activity is not included.</p>';
+         + '<p class="focus-desc">Your body burns <strong>' + perHour + ' calories per hour</strong> at complete rest, that\'s <strong>' + sleep8.toLocaleString() + ' calories</strong> while you sleep and <strong>' + waking16.toLocaleString() + ' calories</strong> during your waking hours before any movement is added.</p>'
+         + '<p class="focus-def">BMR (Basal Metabolic Rate) is calculated using the Mifflin-St Jeor equation, the most accurate population-level formula according to the Academy of Nutrition and Dietetics. It accounts for age, sex, height, and weight. Physical activity is not included.</p>';
 
     body.innerHTML = html;
   }

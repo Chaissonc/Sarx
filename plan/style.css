@@ -2,6 +2,15 @@
    PLAN PAGE — CALORIE TARGET CARD
 ───────────────────────────────────────── */
 
+/* Four buttons (Slow/Moderate/Aggressive/Custom) need a smaller footprint than
+   the shared two-button seg-row to avoid wrapping on narrow screens */
+.seg-row-4 .seg-btn {
+  height: 44px;
+  font-size: 0.66rem;
+  letter-spacing: 0.03em;
+  padding: 0 2px;
+}
+
 /* White card that wraps the calorie input */
 .obj-cal-card {
   background: #fff;

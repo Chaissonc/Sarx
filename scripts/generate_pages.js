@@ -188,18 +188,18 @@ function buildPage(item) {
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>${esc(item.title)} — ${esc(item.topicLabel)} | Sarx</title>
+  <title>${esc(item.title)} | ${esc(item.topicLabel)} | Sarx</title>
   <meta name="description" content="${esc(desc)}">
   <link rel="canonical" href="${url}">
-  <meta property="og:title" content="${esc(item.title)} — Sarx">
+  <meta property="og:title" content="${esc(item.title)} | Sarx">
   <meta property="og:description" content="${esc(desc)}">
   <meta property="og:image" content="https://sarx.app/assets/socialImage.png">
   <meta property="og:url" content="${url}">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="${esc(item.title)} — Sarx">
+  <meta name="twitter:title" content="${esc(item.title)} | Sarx">
   <meta name="twitter:description" content="${esc(desc)}">
-  <meta name="twitter:image:alt" content="Sarx — ${esc(item.title)}">
+  <meta name="twitter:image:alt" content="Sarx | ${esc(item.title)}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap">

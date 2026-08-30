@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function() {
     return;
   }
 
-  document.title = item.title + " — " + item.topicLabel + " | Sarx";
+  document.title = item.title + " | " + item.topicLabel + " | Sarx";
 
   var evClass = "topic-evidence evidence-" + item.evidence;
   var evLabel = item.evidence === "high" ? "HIGH EVIDENCE" : item.evidence === "medium" ? "MED EVIDENCE" : "TREND";

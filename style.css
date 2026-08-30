@@ -276,6 +276,12 @@ a:has(.logo-img) .logo-img { margin: 0; }
 .form-body  { display: flex; flex-direction: column; gap: 18px; }
 .field-group { display: flex; flex-direction: column; gap: 8px; }
 
+/* A bit more breathing room between the Sex toggle and the fields below it —
+   they sit closer together than the rest since the toggle has no input-row box.
+   Scoped to this specific field (not .form-body's first child) since .form-body
+   is shared with the auth page's login form, which shouldn't get this extra gap. */
+.sex-field-group { margin-bottom: 10px; }
+
 .field-label {
   font-size: 0.62rem;
   font-weight: 700;
@@ -319,6 +325,51 @@ a:has(.logo-img) .logo-img { margin: 0; }
 /* Height field puts feet and inches side by side */
 .height-row          { display: flex; gap: 10px; }
 .height-row .input-row { flex: 1; }
+
+/* Floating labels — onboarding form only (age, body mass, height). The label sits
+   inside the box at rest like a placeholder, then on focus/fill floats up to sit
+   near the top of the box, still fully inside the border (no break-the-line effect). */
+.float-input-row {
+  position: relative;
+  border: 1.5px solid #E5E5EA;
+  height: 60px; /* a bit taller than the standard 52px to fit label + value stacked */
+  transition: border-color 0.15s ease;
+}
+.float-input-row:focus-within { border-color: #CC2325; }
+
+/* The " " placeholder exists only so :placeholder-shown works as an "is empty" check */
+.float-input::placeholder { color: transparent; }
+
+.float-label {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #c0c0c8;
+  pointer-events: none;
+  transition: all 0.15s ease;
+}
+
+.float-input:focus + .float-label,
+.float-input:not(:placeholder-shown) + .float-label {
+  top: 9px;
+  transform: translateY(0) scale(0.7);
+  transform-origin: left top;
+  color: #888;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.float-input:focus + .float-label { color: #CC2325; }
+
+/* Nudges the value down once the label has moved above it, so they don't collide */
+.float-input:focus,
+.float-input:not(:placeholder-shown) {
+  padding-top: 14px;
+  transition: padding-top 0.15s ease;
+}
 
 /* Wrapper for the activity dropdown */
 .select-row {
@@ -371,7 +422,7 @@ a:has(.logo-img) .logo-img { margin: 0; }
   flex: 1;
   height: 48px;
   border: 2px solid #E5E5EA;
-  border-radius: 10px;
+  border-radius: 999px;
   background: transparent;
   font-family: 'DM Sans', sans-serif;
   font-size: 0.8rem;
@@ -393,7 +444,7 @@ a:has(.logo-img) .logo-img { margin: 0; }
   height: 54px;
   background: #CC2325;
   border: none;
-  border-radius: 12px;
+  border-radius: 999px;
   font-family: 'DM Sans', sans-serif;
   font-size: 0.88rem;
   font-weight: 700;
@@ -645,9 +696,7 @@ button.menu-item {
 
 .lib-filter.active { background: #CC2325; border-color: #CC2325; color: #fff; }
 
-/* Diet filters on the Plan page use square corners instead of pills */
-#diet-filters            { margin-bottom: -10px; }
-#diet-filters .lib-filter { border-radius: 10px; }
+#diet-filters { margin-bottom: -10px; }
 
 .lib-filter:not(.active):not(.lib-filter-soon):hover { border-color: #1a1a1a; color: #1a1a1a; }
 

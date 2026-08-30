@@ -44,3 +44,22 @@ function showMenuToast(msg) {
   toast.classList.add("visible");
   setTimeout(function () { toast.classList.remove("visible"); }, 4000);
 }
+
+// Reflects the current auth state in the drawer's "Account" item. Signed in, it opens
+// the account page (email, display name, sign out); as a guest, it goes to sign-in.
+async function initAccountMenuItem() {
+  var item = document.getElementById("accountMenuItem");
+  var label = document.getElementById("accountMenuLabel");
+  if (!item || !label || typeof supabaseClient === "undefined") return;
+
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  if (session) {
+    label.textContent = "Account";
+    item.onclick = function () { window.location.href = "../account/"; };
+  } else {
+    label.textContent = "Sign In";
+    item.onclick = function () { window.location.href = "../auth/"; };
+  }
+}
+
+document.addEventListener("DOMContentLoaded", initAccountMenuItem);

@@ -1,0 +1,103 @@
+/* ─────────────────────────────────────────
+   AUTH PAGE — sign up / log in / guest
+───────────────────────────────────────── */
+
+/* Hero block — bigger logo pushed down from the top edge, a sleek tagline instead
+   of a heavy bold heading, and a short welcome line pitching the app. Centered,
+   unlike the onboarding form's left-aligned intro-block, since this is a
+   first-impression login screen, not a data-entry form. */
+.auth-hero {
+  text-align: center;
+  padding-top: 32px;
+  margin-bottom: 36px;
+}
+
+.auth-logo {
+  height: 56px;
+  margin: 0 auto 20px;
+}
+
+.auth-tagline {
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.auth-welcome-desc {
+  font-size: 0.88rem;
+  color: #999;
+  line-height: 1.6;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* Google OAuth button — same footprint as the other auth buttons */
+.oauth-btn {
+  width: 100%;
+  height: 54px;
+  background: #fff;
+  border: 1.5px solid #E5E5EA;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: 12px;
+}
+.oauth-btn:hover  { border-color: #1a1a1a; }
+.oauth-btn:active { transform: scale(0.98); }
+
+/* Tighter than the shared .form-body's 18px. The real space-eaters were the empty
+   error/notice paragraphs reserving a full line each even with no text in them,
+   plus .primary-btn's own margin-top — killing both, not just the gap. */
+.auth-form { gap: 6px; margin-bottom: 18px; }
+.auth-form .form-error,
+.auth-form .auth-notice { min-height: 0; }
+#authSubmitBtn { margin-top: 0; } /* border-radius now comes from the shared .primary-btn */
+
+/* Horizontal rule with "or" centered in it, between the guest link and the button pair below */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  color: #bbb;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin: 4px 0 16px;
+}
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid #E5E5EA;
+}
+.auth-divider span { padding: 0 12px; }
+
+/* "Continue without an account" — deliberately plain text, not a button, so it
+   reads as the least prominent option under Log In and Continue with Google */
+.auth-guest-link {
+  display: block;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #888;
+  text-decoration: none;
+  padding: 6px 0;
+}
+.auth-guest-link:hover { color: #1a1a1a; text-decoration: underline; }
+
+/* Inline success/info text (e.g. "check your email") — reuses form-error's slot but in a neutral tone */
+.auth-notice {
+  font-size: 0.8rem;
+  color: #2a8f4a;
+  min-height: 1em;
+  line-height: 1.5;
+}
